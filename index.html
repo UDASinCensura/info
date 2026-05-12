@@ -1,0 +1,2575 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UDA Sin Censura — Análisis del Código Electoral 2026</title>
+<meta name="description" content="Análisis del Código aprobado por el Consejo Universitario que restringe el debate público en las elecciones de rector UDA 2026.">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script>
+// Suppress benign ResizeObserver loop warning by deferring callbacks to next frame
+(function () {
+  var RO = window.ResizeObserver;
+  if (!RO) return;
+  window.ResizeObserver = function (cb) {
+    return new RO(function (entries, obs) {
+      window.requestAnimationFrame(function () { try { cb(entries, obs); } catch (e) {} });
+    });
+  };
+})();
+window.addEventListener('error', function (e) {
+  if (e && e.message && e.message.indexOf('ResizeObserver') !== -1) {
+    e.stopImmediatePropagation();
+    e.preventDefault();
+    return false;
+  }
+}, true);
+</script>
+<style>
+/* ============ SISTEMA UDA SIN CENSURA ============ */
+:root {
+  --ink:           #0A1A2A;
+  --navy:          #002340;
+  --navy-2:        #003B5C;
+  --blue:          #0077B6;
+  --blue-2:        #005A8E;
+  --cyan:          #00D4FF;
+  --cyan-soft:     rgba(0, 212, 255, 0.12);
+  --paper:         #F4F0E8;
+  --paper-2:       #EAE4D6;
+  --line:          #D8CFBE;
+  --white:         #FFFFFF;
+  --red-stamp:     #C8312A;
+
+  --maxw:          100%;
+  --content-maxw:  1240px;
+  --pad-x:         clamp(20px, 5vw, 80px);
+  --pad-y:         clamp(36px, 7vw, 80px);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Subtle paper texture using noise */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.6 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+  mix-blend-mode: multiply;
+}
+
+.wrap {
+  width: 100%;
+  margin: 0 auto;
+  background: var(--paper);
+}
+
+/* Constrain inner content of full-bleed sections */
+.impacto-grid,
+.titlebar-inner,
+.strip-inner,
+.seccion > *,
+.cita-inner,
+.paradoja-inner,
+.caricatura-wrap > *,
+.denuncia-inner,
+.footer-inner {
+  max-width: var(--content-maxw);
+  margin-inline: auto;
+  width: 100%;
+}
+
+/* ============ REVEAL ANIMATIONS ============ */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal[data-delay="1"] { transition-delay: 0.08s; }
+.reveal[data-delay="2"] { transition-delay: 0.16s; }
+.reveal[data-delay="3"] { transition-delay: 0.24s; }
+.reveal[data-delay="4"] { transition-delay: 0.32s; }
+.reveal[data-delay="5"] { transition-delay: 0.40s; }
+
+/* ============ TYPOGRAPHY UTILITIES ============ */
+.eyebrow {
+  font-size: clamp(10px, 1.8vw, 11.5px);
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: clamp(10px, 1.8vw, 11.5px);
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: clamp(16px, 3vw, 24px);
+}
+.section-tag::before {
+  content: '';
+  width: 32px;
+  height: 2px;
+  background: var(--blue);
+}
+
+/* ============ 1. HERO IMPACTO ============ */
+.impacto {
+  background: var(--navy);
+  color: var(--white);
+  position: relative;
+  overflow: hidden;
+  padding: clamp(40px, 9vw, 90px) var(--pad-x) clamp(36px, 7vw, 72px);
+}
+
+.impacto::before {
+  content: '';
+  position: absolute;
+  top: -120px; right: -120px;
+  width: 420px; height: 420px;
+  border-radius: 50%;
+  border: 60px solid rgba(0, 212, 255, 0.06);
+}
+.impacto::after {
+  content: '';
+  position: absolute;
+  bottom: -80px; left: -80px;
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  border: 40px solid rgba(0, 212, 255, 0.04);
+}
+
+.impacto-grid {
+  position: relative;
+  z-index: 2;
+}
+
+.impacto-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: clamp(28px, 5vw, 44px);
+  flex-wrap: wrap;
+}
+
+.impacto-stamp {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--cyan);
+  color: var(--navy);
+  font-size: clamp(10px, 1.8vw, 11.5px);
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 7px 14px;
+}
+.impacto-stamp .pulse {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--navy);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.7); }
+}
+
+.impacto-loc {
+  font-size: clamp(10px, 1.8vw, 11.5px);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.impacto-pregunta {
+  font-size: clamp(30px, 7.5vw, 60px);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  margin-bottom: clamp(20px, 4vw, 32px);
+}
+.impacto-pregunta .l1 { color: rgba(255,255,255,0.6); font-weight: 700; font-size: 0.5em; letter-spacing: 0.05em; display: block; margin-bottom: 0.6em; }
+.impacto-pregunta .l2 { display: block; }
+.impacto-pregunta .l3 { display: block; }
+.impacto-pregunta .l4 { display: block; color: var(--cyan); }
+
+/* Redaction effect on key phrase in hero */
+.redact {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+}
+.redact::after {
+  content: '';
+  position: absolute;
+  left: -4px; right: -4px;
+  top: 8%;
+  bottom: 8%;
+  background: var(--ink);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.9s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.redact.struck::after { transform: scaleX(1); }
+.redact .reveal-word {
+  position: relative;
+  z-index: 2;
+  transition: color 0.4s 0.5s;
+}
+.redact.struck .reveal-word { color: var(--paper); }
+
+.impacto-sub {
+  font-size: clamp(13px, 2.4vw, 17px);
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  max-width: 560px;
+  margin-bottom: clamp(28px, 5vw, 40px);
+  font-weight: 300;
+}
+.impacto-sub strong { color: var(--cyan); font-weight: 600; }
+
+.impacto-cta-row {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.scroll-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: clamp(10px, 1.7vw, 11.5px);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+.scroll-cue-arrow {
+  width: 28px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+.scroll-cue-arrow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--cyan);
+  transform: translateX(-100%);
+  animation: slide 2.2s ease-in-out infinite;
+}
+@keyframes slide {
+  0% { transform: translateX(-100%); }
+  60%, 100% { transform: translateX(100%); }
+}
+
+/* ============ 2. HERO TITLE BAR ============ */
+.titlebar {
+  background: var(--ink);
+  color: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+.titlebar-inner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+.titlebar::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--cyan) 0%, var(--blue) 50%, var(--cyan) 100%);
+}
+
+.titlebar-main {
+  padding: clamp(28px, 5vw, 48px) var(--pad-x);
+}
+
+.titlebar-eyebrow {
+  font-size: clamp(10px, 1.7vw, 11.5px);
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 14px;
+}
+
+.titlebar-titulo {
+  font-size: clamp(36px, 9vw, 76px);
+  font-weight: 900;
+  line-height: 0.88;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+.titlebar-titulo .accent { color: var(--cyan); }
+
+.titlebar-side {
+  background: var(--navy-2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 18px 22px;
+  min-width: 130px;
+}
+.titlebar-side .label {
+  font-size: clamp(9px, 1.5vw, 10px);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.titlebar-side .date {
+  font-size: clamp(20px, 4vw, 26px);
+  font-weight: 800;
+  text-align: center;
+  line-height: 1;
+}
+.titlebar-side .source {
+  font-size: clamp(8px, 1.3vw, 9px);
+  font-weight: 700;
+  background: var(--cyan);
+  color: var(--navy);
+  padding: 3px 8px;
+  margin-top: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ============ 3. STRIP / TICKER ============ */
+.strip {
+  background: var(--blue);
+  color: var(--white);
+  padding: clamp(10px, 2vw, 14px) var(--pad-x);
+  overflow: hidden;
+  white-space: nowrap;
+}
+.strip-track {
+  display: inline-flex;
+  gap: 36px;
+  font-size: clamp(10px, 1.6vw, 12px);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  animation: ticker 32s linear infinite;
+}
+.strip-track span { display: inline-flex; align-items: center; gap: 36px; }
+.strip-track span::after {
+  content: '◆';
+  color: var(--cyan);
+  font-size: 0.8em;
+}
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ============ 4. PROHIBICIONES ============ */
+.seccion {
+  padding: clamp(48px, 8vw, 90px) var(--pad-x);
+}
+
+.seccion-paper-2 { background: var(--paper-2); }
+
+.s-head {
+  margin-bottom: clamp(28px, 5vw, 44px);
+}
+.s-num {
+  display: inline-block;
+  font-size: clamp(12px, 2vw, 13px);
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  color: var(--blue);
+  margin-bottom: 14px;
+}
+.s-num::before { content: '— '; }
+.s-titulo {
+  font-size: clamp(26px, 5.5vw, 42px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  max-width: 640px;
+  text-wrap: balance;
+}
+.s-titulo em { color: var(--blue); font-style: normal; }
+.s-sub {
+  margin-top: 16px;
+  font-size: clamp(13px, 2.2vw, 15px);
+  color: rgba(10, 26, 42, 0.6);
+  line-height: 1.6;
+  max-width: 560px;
+  font-weight: 400;
+}
+
+.prohibs {
+  display: grid;
+  gap: clamp(10px, 1.8vw, 14px);
+}
+
+.prohib {
+  background: var(--white);
+  border: 1px solid var(--line);
+  padding: clamp(18px, 3.2vw, 26px);
+  display: grid;
+  grid-template-columns: clamp(46px, 7vw, 58px) 1fr auto;
+  gap: clamp(14px, 2.5vw, 22px);
+  align-items: start;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.25s, transform 0.25s;
+}
+.prohib:hover {
+  border-color: var(--navy);
+  transform: translateY(-2px);
+}
+.prohib::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--navy);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.4s ease-out;
+}
+.prohib.in::before { transform: scaleY(1); }
+
+.prohib-num {
+  font-size: clamp(28px, 5vw, 38px);
+  font-weight: 900;
+  color: var(--paper);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  -webkit-text-stroke: 1.5px var(--navy);
+}
+
+.prohib-body {
+  min-width: 0;
+}
+.prohib-tit {
+  font-size: clamp(15px, 2.6vw, 19px);
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.2;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+
+/* Redaction effect: each word gets a black bar that sweeps in */
+.prohib-text {
+  font-size: clamp(12px, 2vw, 14px);
+  color: rgba(10, 26, 42, 0.7);
+  line-height: 1.6;
+  font-weight: 400;
+}
+.prohib-text .redact-word {
+  position: relative;
+  display: inline-block;
+  padding: 0 3px;
+}
+.prohib-text .redact-word::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  top: 5%; bottom: 5%;
+  background: var(--ink);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.prohib.in .prohib-text .redact-word::after { transform: scaleX(1); }
+.prohib.in .prohib-text .redact-word:nth-of-type(1)::after { transition-delay: 0.25s; }
+.prohib.in .prohib-text .redact-word:nth-of-type(2)::after { transition-delay: 0.40s; }
+.prohib.in .prohib-text .redact-word:nth-of-type(3)::after { transition-delay: 0.55s; }
+.prohib.in .prohib-text .redact-word:nth-of-type(4)::after { transition-delay: 0.70s; }
+
+.prohib-stamp {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: clamp(9px, 1.5vw, 10.5px);
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--red-stamp);
+  border: 2px solid var(--red-stamp);
+  padding: 6px 10px;
+  white-space: nowrap;
+  transform: rotate(-3deg);
+  opacity: 0;
+  transition: opacity 0.5s 0.9s;
+}
+.prohib.in .prohib-stamp { opacity: 1; }
+
+@media (max-width: 540px) {
+  .prohib {
+    grid-template-columns: clamp(40px, 8vw, 50px) 1fr;
+  }
+  .prohib-stamp {
+    grid-column: 2;
+    justify-self: start;
+    margin-top: 6px;
+  }
+}
+
+/* ============ 5. CITA INTERMEDIA ============ */
+.cita {
+  background: var(--navy);
+  color: var(--white);
+  padding: clamp(40px, 7vw, 70px) var(--pad-x);
+  position: relative;
+}
+.cita::before {
+  content: '"';
+  position: absolute;
+  top: -10px;
+  left: var(--pad-x);
+  font-family: Georgia, serif;
+  font-size: clamp(120px, 22vw, 220px);
+  line-height: 1;
+  color: var(--cyan);
+  opacity: 0.18;
+  font-weight: 700;
+}
+.cita-txt {
+  font-size: clamp(20px, 3.8vw, 30px);
+  font-weight: 800;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  position: relative;
+  max-width: 640px;
+}
+.cita-txt em { color: var(--cyan); font-style: normal; }
+.cita-attr {
+  margin-top: 22px;
+  font-size: clamp(11px, 1.8vw, 12px);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 600;
+}
+
+/* ============ 6. COMPARATIVA CÓDIGO VS LEY ============ */
+.comp-wrap {
+  display: grid;
+  gap: clamp(12px, 2.5vw, 18px);
+}
+
+.comp-row {
+  display: grid;
+  grid-template-columns: 1fr 44px 1fr;
+  gap: 0;
+  background: var(--white);
+  border: 1px solid var(--line);
+  align-items: stretch;
+  overflow: hidden;
+}
+.comp-side {
+  padding: clamp(16px, 3vw, 22px);
+  font-size: clamp(12px, 2vw, 14px);
+  line-height: 1.55;
+}
+.comp-side strong {
+  display: block;
+  font-size: clamp(10px, 1.7vw, 11.5px);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.comp-codigo {
+  color: rgba(10, 26, 42, 0.7);
+  background: var(--paper);
+  position: relative;
+}
+.comp-codigo strong { color: var(--red-stamp); }
+.comp-codigo::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--red-stamp);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.6s ease-out;
+}
+.comp-row.in .comp-codigo::before { transform: scaleY(1); }
+
+.comp-ley {
+  color: rgba(10, 26, 42, 0.8);
+  background: var(--white);
+  position: relative;
+}
+.comp-ley strong { color: var(--blue); }
+.comp-ley::before {
+  content: '';
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--blue);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.6s 0.2s ease-out;
+}
+.comp-row.in .comp-ley::before { transform: scaleY(1); }
+
+.comp-vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ink);
+  color: var(--cyan);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  position: relative;
+}
+.comp-vs::before, .comp-vs::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  width: 1px;
+  background: var(--cyan);
+  transform: translateX(-50%);
+  transition: height 0.6s ease-out;
+  height: 0;
+}
+.comp-vs::before { top: 0; }
+.comp-vs::after { bottom: 0; }
+.comp-row.in .comp-vs::before,
+.comp-row.in .comp-vs::after { height: calc(50% - 16px); }
+
+.comp-heads {
+  display: grid;
+  grid-template-columns: 1fr 44px 1fr;
+  margin-bottom: clamp(12px, 2vw, 16px);
+}
+.comp-head {
+  padding: 12px 16px;
+  font-size: clamp(10px, 1.7vw, 11.5px);
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.comp-head svg { width: 14px; height: 14px; flex-shrink: 0; }
+.comp-head-codigo { background: var(--ink); color: var(--white); }
+.comp-head-codigo svg { color: var(--red-stamp); }
+.comp-head-ley    { background: var(--blue); color: var(--white); justify-content: flex-end; }
+.comp-head-mid    { background: var(--navy); color: var(--cyan); justify-content: center; }
+
+@media (max-width: 540px) {
+  .comp-row, .comp-heads { grid-template-columns: 1fr; }
+  .comp-vs, .comp-head-mid { display: none; }
+  .comp-codigo { border-bottom: 2px solid var(--ink); }
+  .comp-ley::before { left: 0; right: auto; }
+}
+
+/* ============ 7. PARADOJA (CENTERPIECE) ============ */
+.paradoja {
+  background: var(--ink);
+  color: var(--white);
+  padding: clamp(70px, 12vw, 140px) var(--pad-x);
+  position: relative;
+  overflow: hidden;
+  text-align: left;
+}
+.paradoja::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(640px, 100vw);
+  height: min(640px, 100vw);
+  border-radius: 50%;
+  border: 1px solid rgba(0, 212, 255, 0.08);
+}
+.paradoja::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(420px, 70vw);
+  height: min(420px, 70vw);
+  border-radius: 50%;
+  border: 1px solid rgba(0, 212, 255, 0.12);
+}
+
+.paradoja-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+}
+
+.paradoja-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: clamp(10px, 1.8vw, 12px);
+  font-weight: 800;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: clamp(24px, 4vw, 36px);
+}
+.paradoja-eyebrow::before {
+  content: '';
+  width: 40px;
+  height: 1px;
+  background: var(--cyan);
+  display: inline-block;
+}
+
+.paradoja-txt {
+  font-size: clamp(24px, 5.2vw, 46px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: clamp(28px, 5vw, 40px);
+  text-wrap: balance;
+}
+.paradoja-txt em {
+  font-style: normal;
+  color: var(--cyan);
+  display: inline-block;
+  position: relative;
+}
+.paradoja-txt em::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  bottom: 4px;
+  height: 4px;
+  background: var(--cyan);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.9s 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.paradoja.in .paradoja-txt em::after { transform: scaleX(0.6); opacity: 0.4; }
+
+.paradoja-vs {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: clamp(14px, 3vw, 28px);
+  align-items: center;
+  margin-bottom: clamp(28px, 5vw, 40px);
+  padding: clamp(20px, 4vw, 32px) 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.paradoja-vs-side {
+  font-size: clamp(11px, 2vw, 13px);
+  line-height: 1.4;
+  font-weight: 500;
+}
+.paradoja-vs-side .vs-eyebrow {
+  display: block;
+  font-size: clamp(9px, 1.5vw, 10px);
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.4);
+}
+.paradoja-vs-side .vs-text {
+  color: rgba(255, 255, 255, 0.85);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+.paradoja-vs-side.right { text-align: right; }
+.paradoja-vs-side.right .vs-text { color: var(--cyan); }
+.paradoja-vs-divider {
+  font-size: clamp(20px, 4vw, 28px);
+  font-weight: 900;
+  color: var(--cyan);
+  opacity: 0.6;
+}
+@media (max-width: 540px) {
+  .paradoja-vs { grid-template-columns: 1fr; text-align: left; }
+  .paradoja-vs-side.right { text-align: left; }
+  .paradoja-vs-divider { display: none; }
+}
+
+.paradoja-sub {
+  font-size: clamp(13px, 2.2vw, 15px);
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.6;
+  font-weight: 300;
+  max-width: 540px;
+}
+.paradoja-sub strong { color: var(--white); font-weight: 500; }
+
+/* ============ 8. CARICATURA ============ */
+.caricatura-wrap {
+  background: var(--paper-2);
+  padding: clamp(40px, 7vw, 72px) var(--pad-x);
+}
+/* ============ CARICATURA TAKEOVER ============ */
+.caricatura-takeover {
+  background: var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+.caricatura-intro {
+  padding: clamp(48px, 8vw, 90px) var(--pad-x) clamp(20px, 4vw, 40px);
+  color: var(--white);
+}
+.caricatura-intro .s-num { color: var(--cyan); }
+.caricatura-intro .s-titulo { color: var(--white); }
+.caricatura-intro .s-titulo em { color: var(--cyan); }
+.caricatura-intro .s-sub { color: rgba(255,255,255,0.55); }
+
+.caricatura-track {
+  position: relative;
+  height: 200vh;
+  background: var(--ink);
+}
+.caricatura-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--ink);
+}
+.caricatura-stage {
+  position: relative;
+  aspect-ratio: 2390 / 1792;
+  width: min(100vw, calc(100vh * 2390 / 1792));
+  height: auto;
+  max-height: 100vh;
+  display: block;
+  transform: scale(0.4);
+  transform-origin: center center;
+  will-change: transform;
+  transition: transform 0.08s linear;
+}
+.caricatura-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+  background: var(--paper);
+}
+.caricatura-overlay-label {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  background: var(--ink);
+  padding: 6px 10px;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.caricatura-stage.full .caricatura-overlay-label { opacity: 1; }
+
+/* CTA material de difusión */
+.caricatura-cta-wrap {
+  background: var(--ink);
+  padding: clamp(28px, 5vw, 56px) var(--pad-x) clamp(48px, 7vw, 80px);
+  display: flex;
+  justify-content: center;
+}
+.caricatura-cta {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2.5vw, 22px);
+  width: 100%;
+  max-width: 720px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(0, 180, 216, 0.35);
+  border-left: 4px solid var(--cyan);
+  padding: clamp(18px, 3vw, 26px) clamp(20px, 3vw, 30px);
+  text-decoration: none;
+  color: var(--white);
+  transition: background 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+}
+.caricatura-cta:hover {
+  background: rgba(0, 180, 216, 0.08);
+  border-color: var(--cyan);
+  transform: translateY(-2px);
+}
+.caricatura-cta-ico {
+  flex-shrink: 0;
+  width: clamp(44px, 7vw, 56px);
+  height: clamp(44px, 7vw, 56px);
+  background: var(--cyan);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.caricatura-cta-ico svg { width: 55%; height: 55%; }
+.caricatura-cta-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.caricatura-cta-eyebrow {
+  font-size: clamp(9px, 1.5vw, 10.5px);
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+.caricatura-cta-tit {
+  font-size: clamp(15px, 2.6vw, 19px);
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+.caricatura-cta-sub {
+  font-size: clamp(11px, 1.7vw, 12.5px);
+  color: rgba(255,255,255,0.55);
+  line-height: 1.5;
+  font-weight: 400;
+}
+.caricatura-cta-arrow {
+  flex-shrink: 0;
+  width: clamp(22px, 3.5vw, 28px);
+  height: clamp(22px, 3.5vw, 28px);
+  color: var(--cyan);
+  transition: transform 0.25s ease;
+}
+.caricatura-cta-arrow svg { width: 100%; height: 100%; }
+.caricatura-cta:hover .caricatura-cta-arrow { transform: translateX(4px); }
+
+/* Social icons en footer */
+.footer-social {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+.footer-social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+.footer-social-link:hover {
+  background: var(--cyan);
+  color: var(--ink);
+  border-color: var(--cyan);
+  transform: translateY(-2px);
+}
+.footer-social-link svg { width: 18px; height: 18px; }
+.caricatura-caption-fixed {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255,255,255,0.55);
+  font-size: clamp(11px, 1.6vw, 13px);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-align: center;
+  max-width: min(720px, 88vw);
+  line-height: 1.5;
+  z-index: 5;
+  opacity: 0;
+  transition: opacity 0.5s;
+  font-style: italic;
+  pointer-events: none;
+}
+.caricatura-sticky.full .caricatura-caption-fixed { opacity: 1; }
+.caricatura-progress {
+  position: absolute;
+  top: 0; left: 0;
+  height: 3px;
+  background: var(--cyan);
+  width: 0;
+  z-index: 10;
+}
+
+.caricatura-frame {
+  background: var(--white);
+  border: 1px solid var(--line);
+  padding: clamp(20px, 3vw, 28px);
+  display: grid;
+  gap: clamp(16px, 3vw, 22px);
+}
+.caricatura-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.caricatura-label {
+  font-size: clamp(10px, 1.7vw, 11.5px);
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+.caricatura-num {
+  font-size: clamp(10px, 1.7vw, 11.5px);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: rgba(10, 26, 42, 0.4);
+  font-variant-numeric: tabular-nums;
+}
+.caricatura-slot {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: var(--paper);
+  border: 2px dashed var(--line);
+}
+.caricatura-caption {
+  font-size: clamp(12px, 2vw, 14px);
+  color: rgba(10, 26, 42, 0.65);
+  line-height: 1.55;
+  font-style: italic;
+  font-weight: 400;
+  border-left: 3px solid var(--blue);
+  padding-left: 14px;
+}
+
+/* ============ 9. ENTREVISTAS YOUTUBE ============ */
+.entrevistas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(14px, 2.5vw, 20px);
+}
+.entrevista {
+  background: var(--white);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  transition: transform 0.25s, border-color 0.25s;
+}
+.entrevista:hover {
+  transform: translateY(-3px);
+  border-color: var(--navy);
+}
+.entrevista-link {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+}
+.entrevista-thumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--ink);
+  overflow: hidden;
+}
+.entrevista-thumb-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.entrevista-play {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 68px;
+  height: 48px;
+  opacity: 0.95;
+  transition: transform 0.25s, opacity 0.25s;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+}
+.entrevista-play svg { width: 100%; height: 100%; }
+.entrevista:hover .entrevista-play {
+  transform: translate(-50%, -50%) scale(1.1);
+  opacity: 1;
+}
+.entrevista-thumb {
+  aspect-ratio: 16 / 9;
+  background: var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+.entrevista-thumb iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.entrevista-thumb-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  background: linear-gradient(135deg, var(--navy) 0%, var(--ink) 100%);
+}
+.entrevista-thumb-placeholder svg { width: 44px; height: 44px; }
+.entrevista-thumb-placeholder span {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.entrevista-body {
+  padding: clamp(14px, 2.5vw, 18px);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+.entrevista-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+.entrevista-tit {
+  font-size: clamp(13px, 2.2vw, 15px);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+}
+.entrevista-meta {
+  margin-top: auto;
+  padding-top: 10px;
+  font-size: 11px;
+  color: rgba(10, 26, 42, 0.5);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.entrevista-meta svg { width: 12px; height: 12px; }
+
+/* ============ 10. PASOS ============ */
+.pasos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(10px, 2vw, 16px);
+}
+@media (max-width: 540px) {
+  .pasos-grid { grid-template-columns: 1fr; }
+}
+.paso {
+  background: var(--white);
+  border: 1px solid var(--line);
+  padding: clamp(20px, 3.5vw, 28px) clamp(18px, 3vw, 24px);
+  position: relative;
+}
+.paso::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--blue);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s ease-out;
+}
+.paso.in::before { transform: scaleX(1); }
+.paso-num {
+  font-size: clamp(36px, 7vw, 52px);
+  font-weight: 900;
+  color: var(--blue);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  margin-bottom: 14px;
+}
+.paso-tit {
+  font-size: clamp(14px, 2.4vw, 17px);
+  font-weight: 800;
+  color: var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-bottom: 8px;
+}
+.paso-txt {
+  font-size: clamp(12px, 2vw, 13.5px);
+  color: rgba(10, 26, 42, 0.65);
+  line-height: 1.55;
+}
+
+.anon-banner {
+  margin-top: clamp(20px, 3vw, 28px);
+  background: var(--navy);
+  color: var(--white);
+  padding: clamp(16px, 3vw, 22px) clamp(18px, 3vw, 24px);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: clamp(12px, 2vw, 13.5px);
+  line-height: 1.55;
+}
+.anon-banner svg {
+  flex-shrink: 0;
+  width: 22px; height: 22px;
+  color: var(--cyan);
+}
+.anon-banner strong { color: var(--cyan); font-weight: 700; }
+
+/* ============ 11. CÓDIGO ÍNTEGRO BUTTON ============ */
+.cta-codigo {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2.5vw, 20px);
+  background: var(--ink);
+  color: var(--white);
+  padding: clamp(20px, 3.5vw, 28px) clamp(20px, 3.5vw, 28px);
+  text-decoration: none;
+  border-left: 4px solid var(--cyan);
+  transition: background 0.2s, transform 0.2s;
+  margin-top: clamp(28px, 5vw, 40px);
+}
+.cta-codigo:hover {
+  background: var(--navy);
+  transform: translateX(4px);
+}
+.cta-codigo-ico {
+  flex-shrink: 0;
+  width: 48px; height: 48px;
+  background: var(--cyan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--navy);
+}
+.cta-codigo-ico svg { width: 22px; height: 22px; }
+.cta-codigo-txt { flex: 1; min-width: 0; }
+.cta-codigo-tit {
+  font-size: clamp(13px, 2.3vw, 16px);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.cta-codigo-sub {
+  font-size: clamp(11px, 1.8vw, 12.5px);
+  color: rgba(255, 255, 255, 0.55);
+  font-weight: 400;
+}
+.cta-codigo-arrow {
+  flex-shrink: 0;
+  color: var(--cyan);
+  width: 22px; height: 22px;
+  transition: transform 0.25s;
+}
+.cta-codigo:hover .cta-codigo-arrow { transform: translateX(4px); }
+
+/* ============ 12. DENUNCIA ============ */
+.denuncia {
+  background: var(--cyan);
+  color: var(--navy);
+  padding: clamp(28px, 5vw, 44px) var(--pad-x);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: clamp(18px, 3vw, 28px);
+  align-items: center;
+}
+.denuncia-ico {
+  flex-shrink: 0;
+  width: clamp(48px, 8vw, 64px);
+  height: clamp(48px, 8vw, 64px);
+  background: var(--navy);
+  color: var(--cyan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.denuncia-ico svg { width: clamp(22px, 4vw, 28px); height: clamp(22px, 4vw, 28px); }
+.denuncia-tit {
+  font-size: clamp(15px, 2.6vw, 19px);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.005em;
+  margin-bottom: 6px;
+}
+.denuncia-txt {
+  font-size: clamp(12px, 2vw, 13.5px);
+  line-height: 1.55;
+  color: rgba(0, 35, 64, 0.8);
+}
+.denuncia-mail {
+  display: inline-block;
+  background: var(--navy);
+  color: var(--cyan);
+  font-weight: 700;
+  padding: 2px 8px;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+}
+
+/* ============ 13. FOOTER ============ */
+.footer {
+  background: var(--ink);
+  color: var(--white);
+  padding: clamp(32px, 5vw, 48px) var(--pad-x);
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.footer-hash {
+  font-size: clamp(24px, 5vw, 36px);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.footer-hash .hash { color: var(--cyan); }
+.footer-hash .small {
+  display: block;
+  font-size: clamp(9px, 1.5vw, 10px);
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  color: rgba(255, 255, 255, 0.45);
+  margin-top: 10px;
+  text-transform: uppercase;
+}
+.footer-meta {
+  font-size: clamp(10px, 1.7vw, 11.5px);
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.6;
+  text-align: right;
+  font-weight: 400;
+}
+.footer-meta strong { color: var(--white); font-weight: 600; }
+@media (max-width: 540px) {
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-meta { text-align: left; }
+}
+.footer-bottom {
+  margin-top: clamp(24px, 4vw, 36px);
+  padding-top: clamp(16px, 3vw, 22px);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: clamp(9px, 1.5vw, 10.5px);
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 0.1em;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* ============ STATS BAR (for use after section heads) ============ */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0;
+  margin: clamp(20px, 4vw, 32px) 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.stat {
+  padding: clamp(18px, 3vw, 24px) clamp(14px, 2.5vw, 20px);
+  border-right: 1px solid var(--line);
+}
+.stat:last-child { border-right: none; }
+.stat-num {
+  font-size: clamp(28px, 5.5vw, 42px);
+  font-weight: 900;
+  line-height: 1;
+  color: var(--navy);
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 6px;
+}
+.stat-num .unit { font-size: 0.45em; color: var(--blue); margin-left: 2px; }
+.stat-lbl {
+  font-size: clamp(10px, 1.6vw, 11px);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(10, 26, 42, 0.55);
+  line-height: 1.4;
+}
+@media (max-width: 540px) {
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .stat:nth-child(2) { border-right: none; }
+  .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1px solid var(--line); }
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ═══ 1. IMPACTO ═══ -->
+  <section class="impacto">
+    <div class="impacto-grid">
+      <div class="impacto-meta reveal">
+        <div class="impacto-stamp"><span class="pulse"></span>Despierta UDA</div>
+        <div class="impacto-loc">Universidad del Azuay · 2026</div>
+      </div>
+
+      <h1 class="impacto-pregunta reveal" data-delay="1">
+        <span class="l1">¿Sabías que en tu universidad</span>
+        <span class="l2"><span class="redact"><span class="reveal-word">prohibieron el debate</span></span></span>
+        <span class="l3">antes de elegir</span>
+        <span class="l4">a su rector?</span>
+      </h1>
+
+      <p class="impacto-sub reveal" data-delay="2">
+        El Consejo Universitario aprobó un Código que <strong>silencia a los candidatos</strong>,
+        bloquea las redes sociales y cierra el proceso al escrutinio público.
+        Lo que sigue es lo que el documento dice — y lo que la ley garantiza.
+      </p>
+
+      <div class="impacto-cta-row reveal" data-delay="3">
+        <div class="scroll-cue">
+          <span>Análisis completo</span>
+          <div class="scroll-cue-arrow"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 2. TITULAR EDITORIAL ═══ -->
+  <section class="titlebar">
+    <div class="titlebar-inner">
+    <div class="titlebar-main">
+      <div class="titlebar-eyebrow">Documento bajo análisis</div>
+      <h2 class="titlebar-titulo">El <span class="accent">Código</span><br>de la <span class="accent">Censura</span></h2>
+    </div>
+    <aside class="titlebar-side">
+      <div class="label">Aprobado</div>
+      <div class="date">6 MAR<br>2026</div>
+      <div class="source">Consejo Univ.</div>
+    </aside>
+    </div>
+  </section>
+
+  <!-- ═══ 3. STRIP TICKER ═══ -->
+  <div class="strip">
+    <div class="strip-inner">
+    <div class="strip-track">
+      <span>5 prohibiciones principales</span>
+      <span>1 sola sanción: descalificación inmediata</span>
+      <span>0 espacios de debate público</span>
+      <span>Elecciones de rector 2026</span>
+      <span>5 prohibiciones principales</span>
+      <span>1 sola sanción: descalificación inmediata</span>
+      <span>0 espacios de debate público</span>
+      <span>Elecciones de rector 2026</span>
+    </div>
+    </div>
+  </div>
+
+  <!-- ═══ 4. STATS RÁPIDOS ═══ -->
+  <section class="seccion">
+    <div class="s-head reveal">
+      <div class="s-num">01 · Lo que el código prohíbe</div>
+      <h3 class="s-titulo">Cinco prohibiciones, <em>una sola sanción.</em></h3>
+      <p class="s-sub">Cada artículo del Código se acompaña de la misma consecuencia: descalificación inmediata del candidato. Sin gradación, sin proporcionalidad, sin defensa pública.</p>
+    </div>
+
+    <div class="stats reveal" data-delay="1">
+      <div class="stat">
+        <div class="stat-num"><span data-count="5" data-decimals="0">0</span></div>
+        <div class="stat-lbl">Prohibiciones explícitas</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num"><span data-count="1" data-decimals="0">0</span></div>
+        <div class="stat-lbl">Sanción única</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num"><span data-count="0" data-decimals="0">0</span><span class="unit">/3</span></div>
+        <div class="stat-lbl">Canales externos permitidos</div>
+      </div>
+    </div>
+
+    <!-- ── PROHIBICIONES ── -->
+    <div class="prohibs">
+      <article class="prohib">
+        <div class="prohib-num">01</div>
+        <div class="prohib-body">
+          <h4 class="prohib-tit">Escrutinio público prohibido</h4>
+          <p class="prohib-text">Los procesos electorales deben permanecer <span class="redact-word">fuera del conocimiento público</span>. La discusión queda confinada al interior de la institución.</p>
+        </div>
+        <div class="prohib-stamp">Descalificación</div>
+      </article>
+
+      <article class="prohib">
+        <div class="prohib-num">02</div>
+        <div class="prohib-body">
+          <h4 class="prohib-tit">Redes sociales bloqueadas</h4>
+          <p class="prohib-text">Prohibido el uso de <span class="redact-word">redes sociales</span>, <span class="redact-word">pancartas</span> o cualquier <span class="redact-word">difusión masiva</span> fuera del sitio oficial.</p>
+        </div>
+        <div class="prohib-stamp">Descalificación</div>
+      </article>
+
+      <article class="prohib">
+        <div class="prohib-num">03</div>
+        <div class="prohib-body">
+          <h4 class="prohib-tit">Canal único institucional</h4>
+          <p class="prohib-text">Solo se autoriza la <span class="redact-word">plataforma controlada</span> por la institución que convoca. Toda otra vía queda vedada.</p>
+        </div>
+        <div class="prohib-stamp">Descalificación</div>
+      </article>
+
+      <article class="prohib">
+        <div class="prohib-num">04</div>
+        <div class="prohib-body">
+          <h4 class="prohib-tit">Debates externos prohibidos</h4>
+          <p class="prohib-text">Prohibido participar en <span class="redact-word">foros</span> o <span class="redact-word">debates</span> fuera del perímetro institucional, sin importar quien los organice.</p>
+        </div>
+        <div class="prohib-stamp">Descalificación</div>
+      </article>
+
+      <article class="prohib">
+        <div class="prohib-num">05</div>
+        <div class="prohib-body">
+          <h4 class="prohib-tit">Cero financiamiento externo — incluso de graduados</h4>
+          <p class="prohib-text">Prohibido recibir fondos de <span class="redact-word">cualquier persona ajena</span> a la comunidad activa. Presupuesto declarado obligatoriamente al inscribirse.</p>
+        </div>
+        <div class="prohib-stamp">Descalificación</div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ═══ 5. CITA INTERMEDIA ═══ -->
+  <section class="cita reveal">
+    <div class="cita-inner">
+    <p class="cita-txt">La transparencia no destruye las instituciones — <em>el silencio obligado sí lo hace.</em></p>
+    <div class="cita-attr">— Principio elemental de gobernanza democrática</div>
+    </div>
+  </section>
+
+  <!-- ═══ 6. COMPARATIVA CÓDIGO VS LEY ═══ -->
+  <section class="seccion seccion-paper-2">
+    <div class="s-head reveal">
+      <div class="s-num">02 · Análisis legal</div>
+      <h3 class="s-titulo">El Código <em>versus</em> la ley vigente.</h3>
+      <p class="s-sub">Cada restricción confrontada con el marco normativo que rige a las universidades en Ecuador. Las referencias son textuales del marco constitucional y de la LOES.</p>
+    </div>
+
+    <div class="comp-heads reveal">
+      <div class="comp-head comp-head-codigo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+        El Código dice
+      </div>
+      <div class="comp-head comp-head-mid">VS</div>
+      <div class="comp-head comp-head-ley">
+        La ley garantiza
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+    </div>
+
+    <div class="comp-wrap">
+      <div class="comp-row">
+        <div class="comp-side comp-codigo"><strong>Opacidad obligatoria</strong>Los procesos no pueden ser ventilados al público.</div>
+        <div class="comp-vs">VS</div>
+        <div class="comp-side comp-ley"><strong>Constitución, Art. 18</strong>Derecho a difundir información sin censura previa.</div>
+      </div>
+
+      <div class="comp-row">
+        <div class="comp-side comp-codigo"><strong>Canal único institucional</strong>Solo la plataforma de las autoridades convocantes.</div>
+        <div class="comp-vs">VS</div>
+        <div class="comp-side comp-ley"><strong>Constitución, Art. 355</strong>La autonomía protege a los miembros frente a la institución.</div>
+      </div>
+
+      <div class="comp-row">
+        <div class="comp-side comp-codigo"><strong>Debates externos prohibidos</strong>Ningún foro fuera del perímetro institucional.</div>
+        <div class="comp-vs">VS</div>
+        <div class="comp-side comp-ley"><strong>LOES, Art. 18</strong>Elecciones libres, informadas y transparentes.</div>
+      </div>
+
+      <div class="comp-row">
+        <div class="comp-side comp-codigo"><strong>Una sola sanción para todo</strong>Publicar en redes equivale a la misma pena que difamar.</div>
+        <div class="comp-vs">VS</div>
+        <div class="comp-side comp-ley"><strong>Principio de proporcionalidad</strong>La sanción debe ajustarse a la gravedad de la falta.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 7. PARADOJA — CENTERPIECE ═══ -->
+  <section class="paradoja">
+    <div class="paradoja-inner">
+      <div class="paradoja-eyebrow">La contradicción fundamental</div>
+
+      <h2 class="paradoja-txt">
+        El Código invoca la <em>formación de ciudadanos libres</em> mientras prohíbe el debate, la expresión y el escrutinio en la elección de <em>quien los va a formar.</em>
+      </h2>
+
+      <div class="paradoja-vs">
+        <div class="paradoja-vs-side">
+          <span class="vs-eyebrow">Lo que promete</span>
+          <span class="vs-text">Formar ciudadanos libres, críticos y capaces de deliberar en público.</span>
+        </div>
+        <div class="paradoja-vs-divider">≠</div>
+        <div class="paradoja-vs-side right">
+          <span class="vs-eyebrow">Lo que ejecuta</span>
+          <span class="vs-text">Cierra el debate, restringe la expresión y oculta el proceso electoral.</span>
+        </div>
+      </div>
+
+      <p class="paradoja-sub">
+        Las restricciones fueron diseñadas por quienes <strong>también son parte interesada</strong> en el resultado.
+        Eso no es ética electoral: es administración del silencio.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══ 8. CARICATURA TAKEOVER ═══ -->
+  <section class="caricatura-takeover">
+    <div class="caricatura-intro">
+      <div class="s-head reveal">
+        <div class="s-num">03 · Representación visual</div>
+        <h3 class="s-titulo">Una imagen, <em>el resumen.</em></h3>
+        <p class="s-sub">Sigue bajando — la caricatura va a tomar toda la pantalla mientras la lees.</p>
+      </div>
+    </div>
+    <div class="caricatura-track">
+      <div class="caricatura-sticky">
+        <div class="caricatura-progress"></div>
+        <div class="caricatura-stage">
+          <!-- ▼ PEGA AQUÍ LA URL DE LA CARICATURA (2390 × 1792 px) en el atributo src ▼ -->
+          <img
+            class="caricatura-img"
+            src="https://placehold.co/2390x1792/F4F0E8/0A1A2A?text=PEGA+AQU%C3%8D+LA+URL%0A2390+x+1792"
+            alt="Caricatura editorial sobre el Código UDA"
+            width="2390" height="1792"
+          />
+          <span class="caricatura-overlay-label">Fig. 01 · Caricatura editorial</span>
+        </div>
+        <div class="caricatura-caption-fixed">
+          Pie de caricatura — sustituye este texto cuando peges la imagen final.
+        </div>
+      </div>
+    </div>
+    <div class="caricatura-cta-wrap">
+      <a class="caricatura-cta" href="#" target="_blank" rel="noopener" id="material-difusion-link">
+        <div class="caricatura-cta-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </div>
+        <div class="caricatura-cta-body">
+          <span class="caricatura-cta-eyebrow">Kit ciudadano</span>
+          <span class="caricatura-cta-tit">Descarga material de difusión</span>
+          <span class="caricatura-cta-sub">Caricaturas, infografías y plantillas listas para compartir y reenviar de forma anónima</span>
+        </div>
+        <div class="caricatura-cta-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══ 9. ENTREVISTAS YOUTUBE ═══ -->
+  <section class="seccion">
+    <div class="s-head reveal">
+      <div class="s-num">04 · Voces que ya hablaron</div>
+      <h3 class="s-titulo">Entrevistas <em>en YouTube.</em></h3>
+      <p class="s-sub">Conversaciones públicas con miembros de la comunidad universitaria sobre el Código y sus implicaciones para la autonomía y la libertad de expresión.</p>
+    </div>
+
+    <div class="entrevistas-grid reveal" data-delay="1">
+      <article class="entrevista">
+        <a class="entrevista-link" href="https://www.youtube.com/watch?v=a2fZts0hSnQ" target="_blank" rel="noopener" aria-label="Ver entrevista al Dr. Tarquino Orellana en YouTube">
+        <div class="entrevista-thumb">
+          <img class="entrevista-thumb-img" src="https://i.ytimg.com/vi/a2fZts0hSnQ/hqdefault.jpg" alt="" loading="lazy">
+          <div class="entrevista-play">
+            <svg viewBox="0 0 68 48"><path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55C3.97 2.33 2.27 4.81 1.48 7.74 0 13.05 0 24 0 24s0 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C68 34.95 68 24 68 24s0-10.95-1.48-16.26z" fill="#FF0000"/><path d="M45 24L27 14v20" fill="#fff"/></svg>
+          </div>
+        </div>
+        <div class="entrevista-body">
+          <span class="entrevista-eyebrow">Episodio 01 · Profesor jubilado UDA</span>
+          <h4 class="entrevista-tit">Dr. Tarquino Orellana — Sobre el Código y la autonomía universitaria.</h4>
+          <div class="entrevista-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            YouTube · 28:36
+          </div>
+        </div>
+        </a>
+      </article>
+
+      <article class="entrevista">
+        <a class="entrevista-link" href="https://www.youtube.com/watch?v=29_Am1Z6Dso" target="_blank" rel="noopener" aria-label="Ver entrevista al Dr. Carlos Cordero en YouTube">
+        <div class="entrevista-thumb">
+          <img class="entrevista-thumb-img" src="https://i.ytimg.com/vi/29_Am1Z6Dso/hqdefault.jpg" alt="" loading="lazy">
+          <div class="entrevista-play">
+            <svg viewBox="0 0 68 48"><path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55C3.97 2.33 2.27 4.81 1.48 7.74 0 13.05 0 24 0 24s0 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C68 34.95 68 24 68 24s0-10.95-1.48-16.26z" fill="#FF0000"/><path d="M45 24L27 14v20" fill="#fff"/></svg>
+          </div>
+        </div>
+        <div class="entrevista-body">
+          <span class="entrevista-eyebrow">Episodio 02 · Ex Rector UDA</span>
+          <h4 class="entrevista-tit">Dr. Carlos Cordero — La perspectiva de quien condujo la institución.</h4>
+          <div class="entrevista-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            YouTube · 38:11
+          </div>
+        </div>
+        </a>
+      </article>
+    </div>
+  </section>
+
+  <!-- ═══ 10. PASOS / ACCIÓN ═══ -->
+  <section class="seccion seccion-paper-2">
+    <div class="s-head reveal">
+      <div class="s-num">05 · Lo que sí podemos hacer</div>
+      <h3 class="s-titulo">Los estudiantes <em>tenemos voz.</em></h3>
+      <p class="s-sub">El Código restringe a candidatos, no a la comunidad estudiantil. Informar, difundir y exigir sigue siendo perfectamente legal — y necesario.</p>
+    </div>
+
+    <div class="pasos-grid">
+      <article class="paso">
+        <div class="paso-num">01</div>
+        <h4 class="paso-tit">Informarte</h4>
+        <p class="paso-txt">Lee el Código íntegro. El problema persiste porque la mayoría no lo conoce.</p>
+      </article>
+      <article class="paso">
+        <div class="paso-num">02</div>
+        <h4 class="paso-tit">Difundir</h4>
+        <p class="paso-txt">Comparte de forma anónima. El Código restringe a candidatos, no a estudiantes.</p>
+      </article>
+      <article class="paso">
+        <div class="paso-num">03</div>
+        <h4 class="paso-tit">Exigir</h4>
+        <p class="paso-txt">Activa a representantes estudiantiles para presentar la derogación formal.</p>
+      </article>
+    </div>
+
+    <div class="anon-banner reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <div><strong>Protege tu identidad al compartir.</strong> No incluyas tu nombre. Usa reenvíos en cadena o canales anónimos — lo que importa es que el argumento llegue.</div>
+    </div>
+
+    <a class="cta-codigo" href="https://files.catbox.moe/4qsis9.pdf" target="_blank" rel="noopener">
+      <div class="cta-codigo-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      </div>
+      <div class="cta-codigo-txt">
+        <div class="cta-codigo-tit">Lee el Código íntegro</div>
+        <div class="cta-codigo-sub">Documento oficial aprobado por el Consejo Universitario</div>
+      </div>
+      <div class="cta-codigo-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </div>
+    </a>
+  </section>
+
+  <!-- ═══ 11. DENUNCIA ANÓNIMA ═══ -->
+  <section class="denuncia">
+    <div class="denuncia-inner">
+    <div class="denuncia-ico">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    </div>
+    <div>
+      <div class="denuncia-tit">¿Conoces un caso de censura o presión dentro de la UDA?</div>
+      <div class="denuncia-txt">
+        Envía tu denuncia de forma <strong>completamente anónima</strong> a
+        <a class="denuncia-mail" href="/cdn-cgi/l/email-protection#ea9f8e8b998384898f84999f988baa9a98859e8584c4878f"><span class="__cf_email__" data-cfemail="8efbeaeffde7e0edebe0fdfbfcefcefefce1fae1e0a0e3eb">[email&#160;protected]</span></a>.
+        Proton Mail cifra los mensajes y no registra tu identidad.
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <!-- ═══ 12. FOOTER ═══ -->
+  <footer class="footer">
+    <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-hash"><span class="hash">#</span>UDASinCensura
+        <span class="small">Distribución libre y anónima</span>
+        <div class="footer-social">
+          <a class="footer-social-link" href="https://www.facebook.com/UDASinCensura/" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
+          </a>
+          <a class="footer-social-link" href="https://www.instagram.com/udasincensura/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a class="footer-social-link" href="https://x.com/UDASinCensura" target="_blank" rel="noopener" aria-label="X (Twitter)">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-meta">
+        <strong>Comunidad universitaria UDA</strong><br>
+        Mayo 2026<br>
+        Análisis ciudadano independiente
+      </div>
+    </div>
+    <div class="footer-bottom">
+      Este documento es un análisis ciudadano basado en el texto oficial del Código aprobado por el Consejo Universitario el 6 de marzo de 2026. Las referencias legales corresponden a la Constitución de la República del Ecuador (Arts. 18 y 355) y a la Ley Orgánica de Educación Superior (LOES, Art. 18). No reproduce logotipos ni imagen oficial de la institución.
+    </div>
+    </div>
+  </footer>
+
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/**
+ * <image-slot> — user-fillable image placeholder.
+ *
+ * Drop this into a deck, mockup, or page wherever you want the user to
+ * supply an image. You control the slot's shape and size; the user fills it
+ * by dragging an image file onto it (or clicking to browse). The dropped
+ * image persists across reloads via a .image-slots.state.json sidecar —
+ * same read-via-fetch / write-via-window.omelette pattern as
+ * design_canvas.jsx, so the filled slot shows on share links, downloaded
+ * zips, and PPTX export. Outside the omelette runtime the slot is read-only.
+ *
+ * The host bridge only allows sidecar writes at the project root, so the
+ * HTML that uses this component is assumed to live at the project root too
+ * (same constraint as design_canvas.jsx).
+ *
+ * Attributes:
+ *   id           Persistence key. REQUIRED for the drop to survive reload —
+ *                every slot on the page needs a distinct id.
+ *   shape        'rect' | 'rounded' | 'circle' | 'pill'   (default 'rounded')
+ *                'circle' applies 50% border-radius; on a non-square slot
+ *                that's an ellipse — set equal width and height for a true
+ *                circle.
+ *   radius       Corner radius in px for 'rounded'.       (default 12)
+ *   mask         Any CSS clip-path value. Overrides `shape` — use this for
+ *                hexagons, blobs, arbitrary polygons.
+ *   fit          object-fit: cover | contain | fill.       (default 'cover')
+ *                With cover (the default) double-clicking the filled slot
+ *                enters a reframe mode: the whole image spills past the mask
+ *                (translucent outside, opaque inside), drag to reposition,
+ *                corner-drag to scale. The crop persists alongside the image
+ *                in the sidecar. contain/fill stay static.
+ *   position     object-position for fit=contain|fill.     (default '50% 50%')
+ *   placeholder  Empty-state caption.                      (default 'Drop an image')
+ *   src          Optional initial/fallback image URL. A user drop overrides
+ *                it; clearing the drop reveals src again.
+ *
+ * Size and layout come from ordinary CSS on the element — width/height
+ * inline or from a parent grid — so it composes with any layout.
+ *
+ * Usage:
+ *   <script src="image-slot.js"><\/script>
+ *   <image-slot id="hero"   style="width:800px;height:450px" shape="rounded" radius="20"
+ *               placeholder="Drop a hero image"></image-slot>
+ *   <image-slot id="avatar" style="width:120px;height:120px" shape="circle"></image-slot>
+ *   <image-slot id="kite"   style="width:300px;height:300px"
+ *               mask="polygon(50% 0, 100% 50%, 50% 100%, 0 50%)"></image-slot>
+ */
+
+(() => {
+  const STATE_FILE = '.image-slots.state.json';
+  // 2× a ~600px slot in a 1920-wide deck — retina-sharp without making the
+  // sidecar enormous. A 1200px WebP at q=0.85 is ~150-300KB.
+  const MAX_DIM = 1200;
+  // Raster formats only. SVG is excluded (can carry script; createImageBitmap
+  // on SVG blobs is inconsistent). GIF is excluded because the canvas
+  // re-encode keeps only the first frame, so an animated GIF would silently
+  // go still — better to reject than surprise.
+  const ACCEPT = ['image/png', 'image/jpeg', 'image/webp', 'image/avif'];
+
+  // ── Shared sidecar store ────────────────────────────────────────────────
+  // One fetch + immediate write-on-change for every <image-slot> on the
+  // page. Reads via fetch() so viewing works anywhere the HTML and sidecar
+  // are served together; writes go through window.omelette.writeFile, which
+  // the host allowlists to *.state.json basenames only.
+  const subs = new Set();
+  let slots = {};
+  // ids explicitly cleared before the sidecar fetch resolved — otherwise
+  // the merge below can't tell "never set" from "just deleted" and would
+  // resurrect the sidecar's stale value.
+  const tombstones = new Set();
+  let loaded = false;
+  let loadP = null;
+
+  function load() {
+    if (loadP) return loadP;
+    loadP = fetch(STATE_FILE)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((j) => {
+        // Merge: sidecar loses to any in-memory change that raced ahead of
+        // the fetch (drop or clear) so neither is clobbered by hydration.
+        if (j && typeof j === 'object') {
+          const merged = Object.assign({}, j, slots);
+          // A framing-only write that raced ahead of hydration must not
+          // drop a user image that's only on disk — inherit u from the
+          // sidecar for any in-memory entry that lacks one.
+          for (const k in slots) {
+            if (merged[k] && !merged[k].u && j[k]) {
+              merged[k].u = typeof j[k] === 'string' ? j[k] : j[k].u;
+            }
+          }
+          for (const id of tombstones) delete merged[id];
+          slots = merged;
+        }
+        tombstones.clear();
+      })
+      .catch(() => {})
+      .then(() => { loaded = true; subs.forEach((fn) => fn()); });
+    return loadP;
+  }
+
+  // Serialize writes so two near-simultaneous drops on different slots
+  // can't reorder at the backend and leave the sidecar with only the
+  // first. A save requested mid-flight just marks dirty and re-fires on
+  // completion with the then-current slots.
+  let saving = false;
+  let saveDirty = false;
+  function save() {
+    if (saving) { saveDirty = true; return; }
+    const w = window.omelette && window.omelette.writeFile;
+    if (!w) return;
+    saving = true;
+    Promise.resolve(w(STATE_FILE, JSON.stringify(slots)))
+      .catch(() => {})
+      .then(() => { saving = false; if (saveDirty) { saveDirty = false; save(); } });
+  }
+
+  const S_MAX = 5;
+  const clampS = (s) => Math.max(1, Math.min(S_MAX, s));
+
+  // Normalize a stored slot value. Pre-reframe sidecars stored a bare
+  // data-URL string; newer ones store {u, s, x, y}. Either shape is valid.
+  function getSlot(id) {
+    const v = slots[id];
+    if (!v) return null;
+    return typeof v === 'string' ? { u: v, s: 1, x: 0, y: 0 } : v;
+  }
+
+  function setSlot(id, val) {
+    if (!id) return;
+    if (val) { slots[id] = val; tombstones.delete(id); }
+    else { delete slots[id]; if (!loaded) tombstones.add(id); }
+    subs.forEach((fn) => fn());
+    // A drop is rare + high-value — write immediately so nav-away can't lose
+    // it. Gate on the initial read so we don't overwrite a sidecar we haven't
+    // merged yet; the merge in load() keeps this change once the read lands.
+    if (loaded) save(); else load().then(save);
+  }
+
+  // ── Image downscale ─────────────────────────────────────────────────────
+  // Encode through a canvas so the sidecar carries resized bytes, not the
+  // raw upload. Longest side is capped at 2× the slot's rendered width
+  // (retina) and at MAX_DIM. WebP keeps alpha and is ~10× smaller than PNG
+  // for photos, so there's no need for per-image format picking.
+  async function toDataUrl(file, targetW) {
+    const bitmap = await createImageBitmap(file);
+    try {
+      const cap = Math.min(MAX_DIM, Math.max(1, Math.round(targetW * 2)) || MAX_DIM);
+      const scale = Math.min(1, cap / Math.max(bitmap.width, bitmap.height));
+      const w = Math.max(1, Math.round(bitmap.width * scale));
+      const h = Math.max(1, Math.round(bitmap.height * scale));
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(bitmap, 0, 0, w, h);
+      return canvas.toDataURL('image/webp', 0.85);
+    } finally {
+      bitmap.close && bitmap.close();
+    }
+  }
+
+  // ── Custom element ──────────────────────────────────────────────────────
+  const stylesheet =
+    ':host{display:inline-block;position:relative;vertical-align:top;' +
+    '  font:13px/1.3 system-ui,-apple-system,sans-serif;color:rgba(0,0,0,.55);width:240px;height:160px}' +
+    '.frame{position:absolute;inset:0;overflow:hidden;background:rgba(0,0,0,.04)}' +
+    // .frame img (clipped) and .spill (unclipped ghost + handles) share the
+    // same left/top/width/height in frame-%, computed by _applyView(), so the
+    // inside-mask crop and the outside-mask spill stay pixel-aligned.
+    '.frame img{position:absolute;max-width:none;transform:translate(-50%,-50%);' +
+    '  -webkit-user-drag:none;user-select:none;touch-action:none}' +
+    // Reframe mode (double-click): the full image spills past the mask. The
+    // spill layer is sized to the IMAGE bounds so its corners are where the
+    // resize handles belong. The ghost <img> inside is translucent; the real
+    // clipped <img> underneath shows the opaque in-mask crop.
+    '.spill{position:absolute;transform:translate(-50%,-50%);display:none;z-index:1;' +
+    '  cursor:grab;touch-action:none}' +
+    ':host([data-panning]) .spill{cursor:grabbing}' +
+    '.spill .ghost{position:absolute;inset:0;width:100%;height:100%;opacity:.35;' +
+    '  pointer-events:none;-webkit-user-drag:none;user-select:none;' +
+    '  box-shadow:0 0 0 1px rgba(0,0,0,.2),0 12px 32px rgba(0,0,0,.2)}' +
+    '.spill .handle{position:absolute;width:12px;height:12px;border-radius:50%;' +
+    '  background:#fff;box-shadow:0 0 0 1.5px #c96442,0 1px 3px rgba(0,0,0,.3);' +
+    '  transform:translate(-50%,-50%)}' +
+    '.spill .handle[data-c=nw]{left:0;top:0;cursor:nwse-resize}' +
+    '.spill .handle[data-c=ne]{left:100%;top:0;cursor:nesw-resize}' +
+    '.spill .handle[data-c=sw]{left:0;top:100%;cursor:nesw-resize}' +
+    '.spill .handle[data-c=se]{left:100%;top:100%;cursor:nwse-resize}' +
+    ':host([data-reframe]){z-index:10}' +
+    ':host([data-reframe]) .spill{display:block}' +
+    ':host([data-reframe]) .frame{box-shadow:0 0 0 2px #c96442}' +
+    '.empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;' +
+    '  justify-content:center;gap:6px;text-align:center;padding:12px;box-sizing:border-box;' +
+    '  cursor:pointer;user-select:none}' +
+    '.empty svg{opacity:.45}' +
+    '.empty .cap{max-width:90%;font-weight:500;letter-spacing:.01em}' +
+    '.empty .sub{font-size:11px}' +
+    '.empty .sub u{text-underline-offset:2px;text-decoration-color:rgba(0,0,0,.25)}' +
+    '.empty:hover .sub u{color:rgba(0,0,0,.75);text-decoration-color:currentColor}' +
+    ':host([data-over]) .frame{outline:2px solid #c96442;outline-offset:-2px;' +
+    '  background:rgba(201,100,66,.10)}' +
+    '.ring{position:absolute;inset:0;pointer-events:none;border:1.5px dashed rgba(0,0,0,.25);' +
+    '  transition:border-color .12s}' +
+    ':host([data-over]) .ring{border-color:#c96442}' +
+    ':host([data-filled]) .ring{display:none}' +
+    // Controls sit BELOW the mask (top:100%), absolutely positioned so the
+    // author-declared slot height is unaffected. The gap is padding, not a
+    // top offset, so the hover target stays contiguous with the frame.
+    '.ctl{position:absolute;top:100%;left:50%;transform:translateX(-50%);padding-top:8px;' +
+    '  display:flex;gap:6px;opacity:0;pointer-events:none;transition:opacity .12s;z-index:2;' +
+    '  white-space:nowrap}' +
+    ':host([data-filled][data-editable]:hover) .ctl,:host([data-reframe]) .ctl' +
+    '  {opacity:1;pointer-events:auto}' +
+    '.ctl button{appearance:none;border:0;border-radius:6px;padding:5px 10px;cursor:pointer;' +
+    '  background:rgba(0,0,0,.65);color:#fff;font:11px/1 system-ui,-apple-system,sans-serif;' +
+    '  backdrop-filter:blur(6px)}' +
+    '.ctl button:hover{background:rgba(0,0,0,.8)}' +
+    '.err{position:absolute;left:8px;bottom:8px;right:8px;color:#b3261e;font-size:11px;' +
+    '  background:rgba(255,255,255,.85);padding:4px 6px;border-radius:5px;pointer-events:none}';
+
+  const icon =
+    '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+    'stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' +
+    '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>' +
+    '<path d="m21 15-5-5L5 21"/></svg>';
+
+  class ImageSlot extends HTMLElement {
+    static get observedAttributes() {
+      return ['shape', 'radius', 'mask', 'fit', 'position', 'placeholder', 'src', 'id'];
+    }
+
+    constructor() {
+      super();
+      const root = this.attachShadow({ mode: 'open' });
+      // .spill and .ctl sit OUTSIDE .frame so overflow:hidden + border-radius
+      // on the frame (circle, pill, rounded) can't clip them.
+      root.innerHTML =
+        '<style>' + stylesheet + '</style>' +
+        '<div class="frame" part="frame">' +
+        '  <img part="image" alt="" draggable="false" style="display:none">' +
+        '  <div class="empty" part="empty">' + icon +
+        '    <div class="cap"></div>' +
+        '    <div class="sub">or <u>browse files</u></div></div>' +
+        '  <div class="ring" part="ring"></div>' +
+        '</div>' +
+        '<div class="spill">' +
+        '  <img class="ghost" alt="" draggable="false">' +
+        '  <div class="handle" data-c="nw"></div><div class="handle" data-c="ne"></div>' +
+        '  <div class="handle" data-c="sw"></div><div class="handle" data-c="se"></div>' +
+        '</div>' +
+        '<div class="ctl"><button data-act="replace" title="Replace image">Replace</button>' +
+        '  <button data-act="clear" title="Remove image">Remove</button></div>' +
+        '<input type="file" accept="' + ACCEPT.join(',') + '" hidden>';
+      this._frame = root.querySelector('.frame');
+      this._ring = root.querySelector('.ring');
+      this._img = root.querySelector('.frame img');
+      this._empty = root.querySelector('.empty');
+      this._cap = root.querySelector('.cap');
+      this._sub = root.querySelector('.sub');
+      this._spill = root.querySelector('.spill');
+      this._ghost = root.querySelector('.ghost');
+      this._err = null;
+      this._input = root.querySelector('input');
+      this._depth = 0;
+      this._gen = 0;
+      this._view = { s: 1, x: 0, y: 0 };
+      this._subFn = () => this._render();
+      // Shadow-DOM listeners live with the shadow DOM — bound once here so
+      // disconnect/reconnect (e.g. React remount) doesn't stack handlers.
+      this._empty.addEventListener('click', () => this._input.click());
+      root.addEventListener('click', (e) => {
+        const act = e.target && e.target.getAttribute && e.target.getAttribute('data-act');
+        if (act === 'replace') { this._exitReframe(true); this._input.click(); }
+        if (act === 'clear') {
+          this._exitReframe(false);
+          this._gen++;
+          this._local = null;
+          if (this.id) setSlot(this.id, null); else this._render();
+        }
+      });
+      this._input.addEventListener('change', () => {
+        const f = this._input.files && this._input.files[0];
+        if (f) this._ingest(f);
+        this._input.value = '';
+      });
+      // naturalWidth/Height aren't known until load — re-apply so the cover
+      // baseline is computed from real dimensions, not the 100%×100% fallback.
+      this._img.addEventListener('load', () => this._applyView());
+      // Gated on editable + fit=cover so share links and contain/fill slots
+      // stay static.
+      this.addEventListener('dblclick', (e) => {
+        if (!this.hasAttribute('data-editable') || !this._reframes()) return;
+        e.preventDefault();
+        if (this.hasAttribute('data-reframe')) this._exitReframe(true);
+        else this._enterReframe();
+      });
+      // Pan + resize both originate on the spill layer. A handle pointerdown
+      // drives an aspect-locked resize anchored at the opposite corner; any
+      // other pointerdown on the spill pans. Offsets are frame-% so a
+      // reframed slot survives responsive resize / PPTX export.
+      this._spill.addEventListener('pointerdown', (e) => {
+        if (e.button !== 0 || !this.hasAttribute('data-reframe')) return;
+        e.preventDefault();
+        e.stopPropagation();
+        this._spill.setPointerCapture(e.pointerId);
+        const rect = this.getBoundingClientRect();
+        const fw = rect.width || 1, fh = rect.height || 1;
+        const corner = e.target.getAttribute && e.target.getAttribute('data-c');
+        let move;
+        if (corner) {
+          // Resize about the OPPOSITE corner. Viewport-px throughout (rect
+          // fw/fh, not clientWidth) so the math survives a transform:scale()
+          // ancestor — deck_stage renders slides scaled-to-fit.
+          const iw = this._img.naturalWidth || 1, ih = this._img.naturalHeight || 1;
+          const base = Math.max(fw / iw, fh / ih);
+          const sx = corner.includes('e') ? 1 : -1;
+          const sy = corner.includes('s') ? 1 : -1;
+          const s0 = this._view.s;
+          const w0 = iw * base * s0, h0 = ih * base * s0;
+          const cx0 = (50 + this._view.x) / 100 * fw;
+          const cy0 = (50 + this._view.y) / 100 * fh;
+          const ox = cx0 - sx * w0 / 2, oy = cy0 - sy * h0 / 2;
+          const diag0 = Math.hypot(w0, h0);
+          const ux = sx * w0 / diag0, uy = sy * h0 / diag0;
+          move = (ev) => {
+            const proj = (ev.clientX - rect.left - ox) * ux +
+                         (ev.clientY - rect.top - oy) * uy;
+            const s = clampS(s0 * proj / diag0);
+            const d = diag0 * s / s0;
+            this._view.s = s;
+            this._view.x = (ox + ux * d / 2) / fw * 100 - 50;
+            this._view.y = (oy + uy * d / 2) / fh * 100 - 50;
+            this._clampView();
+            this._applyView();
+          };
+        } else {
+          this.setAttribute('data-panning', '');
+          const start = { px: e.clientX, py: e.clientY, x: this._view.x, y: this._view.y };
+          move = (ev) => {
+            this._view.x = start.x + (ev.clientX - start.px) / fw * 100;
+            this._view.y = start.y + (ev.clientY - start.py) / fh * 100;
+            this._clampView();
+            this._applyView();
+          };
+        }
+        const up = () => {
+          try { this._spill.releasePointerCapture(e.pointerId); } catch {}
+          this._spill.removeEventListener('pointermove', move);
+          this._spill.removeEventListener('pointerup', up);
+          this._spill.removeEventListener('pointercancel', up);
+          this.removeAttribute('data-panning');
+          this._dragUp = null;
+        };
+        // Stashed so _exitReframe (Escape / outside-click mid-drag) can
+        // tear the capture + listeners down synchronously.
+        this._dragUp = up;
+        this._spill.addEventListener('pointermove', move);
+        this._spill.addEventListener('pointerup', up);
+        this._spill.addEventListener('pointercancel', up);
+      });
+      // Wheel zoom stays available inside reframe mode as a trackpad nicety —
+      // zooms toward the cursor (offset' = cursor·(1-k) + offset·k).
+      this.addEventListener('wheel', (e) => {
+        if (!this.hasAttribute('data-reframe')) return;
+        e.preventDefault();
+        const r = this.getBoundingClientRect();
+        const cx = (e.clientX - r.left) / r.width * 100 - 50;
+        const cy = (e.clientY - r.top) / r.height * 100 - 50;
+        const prev = this._view.s;
+        const next = clampS(prev * Math.pow(1.0015, -e.deltaY));
+        if (next === prev) return;
+        const k = next / prev;
+        this._view.s = next;
+        this._view.x = cx * (1 - k) + this._view.x * k;
+        this._view.y = cy * (1 - k) + this._view.y * k;
+        this._clampView();
+        this._applyView();
+      }, { passive: false });
+    }
+
+    connectedCallback() {
+      // Warn once per page — an id-less slot works for the session but
+      // cannot persist, and two id-less slots would share nothing.
+      if (!this.id && !ImageSlot._warned) {
+        ImageSlot._warned = true;
+        console.warn('<image-slot> without an id will not persist its dropped image.');
+      }
+      this.addEventListener('dragenter', this);
+      this.addEventListener('dragover', this);
+      this.addEventListener('dragleave', this);
+      this.addEventListener('drop', this);
+      subs.add(this._subFn);
+      // width%/height% in _applyView encode the frame aspect at call time —
+      // a host resize (responsive grid, pane divider) would stretch the
+      // image until the next _render. Re-render on size change: _render()
+      // re-seeds _view from stored before clamp/apply, so a shrink→grow
+      // cycle round-trips instead of ratcheting x/y toward the narrower
+      // frame's clamp range.
+      this._ro = new ResizeObserver(() => this._render());
+      this._ro.observe(this);
+      load();
+      this._render();
+    }
+
+    disconnectedCallback() {
+      subs.delete(this._subFn);
+      this.removeEventListener('dragenter', this);
+      this.removeEventListener('dragover', this);
+      this.removeEventListener('dragleave', this);
+      this.removeEventListener('drop', this);
+      if (this._ro) { this._ro.disconnect(); this._ro = null; }
+      this._exitReframe(false);
+    }
+
+    _enterReframe() {
+      if (this.hasAttribute('data-reframe')) return;
+      this.setAttribute('data-reframe', '');
+      this._applyView();
+      // Close on click outside (the spill handler stopPropagation()s so
+      // in-image drags don't reach this) and on Escape. Listeners are held
+      // on the instance so _exitReframe / disconnectedCallback can detach
+      // exactly what was attached.
+      this._outside = (e) => {
+        if (e.composedPath && e.composedPath().includes(this)) return;
+        this._exitReframe(true);
+      };
+      this._esc = (e) => { if (e.key === 'Escape') this._exitReframe(true); };
+      document.addEventListener('pointerdown', this._outside, true);
+      document.addEventListener('keydown', this._esc, true);
+    }
+
+    _exitReframe(commit) {
+      if (!this.hasAttribute('data-reframe')) return;
+      if (this._dragUp) this._dragUp();
+      this.removeAttribute('data-reframe');
+      this.removeAttribute('data-panning');
+      if (this._outside) document.removeEventListener('pointerdown', this._outside, true);
+      if (this._esc) document.removeEventListener('keydown', this._esc, true);
+      this._outside = this._esc = null;
+      if (commit) this._commitView();
+    }
+
+    attributeChangedCallback() { if (this.shadowRoot) this._render(); }
+
+    // handleEvent — one listener object for all four drag events keeps the
+    // add/remove symmetric and the depth counter correct.
+    handleEvent(e) {
+      if (e.type === 'dragenter' || e.type === 'dragover') {
+        // Without preventDefault the browser never fires 'drop'.
+        e.preventDefault();
+        e.stopPropagation();
+        if (e.dataTransfer) e.dataTransfer.dropEffect = 'copy';
+        if (e.type === 'dragenter') this._depth++;
+        this.setAttribute('data-over', '');
+      } else if (e.type === 'dragleave') {
+        // dragenter/leave fire for every descendant crossing — count depth
+        // so hovering the icon inside the empty state doesn't flicker.
+        if (--this._depth <= 0) { this._depth = 0; this.removeAttribute('data-over'); }
+      } else if (e.type === 'drop') {
+        e.preventDefault();
+        e.stopPropagation();
+        this._depth = 0;
+        this.removeAttribute('data-over');
+        const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+        if (f) this._ingest(f);
+      }
+    }
+
+    async _ingest(file) {
+      this._setError(null);
+      if (!file || ACCEPT.indexOf(file.type) < 0) {
+        this._setError('Drop a PNG, JPEG, WebP, or AVIF image.');
+        return;
+      }
+      // toDataUrl can take hundreds of ms on a large photo. A Clear or a
+      // newer drop during that window would be clobbered when this await
+      // resumes — bump + capture a generation so stale encodes bail.
+      const gen = ++this._gen;
+      try {
+        const w = this.clientWidth || this.offsetWidth || MAX_DIM;
+        const url = await toDataUrl(file, w);
+        if (gen !== this._gen) return;
+        // Only exit reframe once the new image is in hand — a rejected type
+        // or decode failure leaves the in-progress crop untouched.
+        this._exitReframe(false);
+        const val = { u: url, s: 1, x: 0, y: 0 };
+        setSlot(this.id || '', val);
+        // Keep a session-local copy for id-less slots so the drop still
+        // shows, even though it cannot persist.
+        if (!this.id) { this._local = val; this._render(); }
+      } catch (err) {
+        if (gen !== this._gen) return;
+        this._setError('Could not read that image.');
+        console.warn('<image-slot> ingest failed:', err);
+      }
+    }
+
+    _setError(msg) {
+      if (this._err) { this._err.remove(); this._err = null; }
+      if (!msg) return;
+      const d = document.createElement('div');
+      d.className = 'err'; d.textContent = msg;
+      this.shadowRoot.appendChild(d);
+      this._err = d;
+      setTimeout(() => { if (this._err === d) { d.remove(); this._err = null; } }, 3000);
+    }
+
+    // Reframing (pan/resize) is only meaningful for fit=cover — contain/fill
+    // keep the old object-fit path and double-click is a no-op.
+    _reframes() {
+      return this.hasAttribute('data-filled') &&
+        (this.getAttribute('fit') || 'cover') === 'cover';
+    }
+
+    // Cover-baseline geometry, shared by clamp/apply/resize. Null until the
+    // img has loaded (naturalWidth is 0 before that) or when the slot has no
+    // layout box — ResizeObserver fires with a 0×0 rect under display:none,
+    // and clamping against a degenerate 1×1 frame would silently pull the
+    // stored pan toward zero.
+    _geom() {
+      const iw = this._img.naturalWidth, ih = this._img.naturalHeight;
+      const fw = this.clientWidth, fh = this.clientHeight;
+      if (!iw || !ih || !fw || !fh) return null;
+      return { iw, ih, fw, fh, base: Math.max(fw / iw, fh / ih) };
+    }
+
+    _clampView() {
+      // Pan range on each axis is half the overflow past the frame edge.
+      const g = this._geom();
+      if (!g) return;
+      const mx = Math.max(0, (g.iw * g.base * this._view.s / g.fw - 1) * 50);
+      const my = Math.max(0, (g.ih * g.base * this._view.s / g.fh - 1) * 50);
+      this._view.x = Math.max(-mx, Math.min(mx, this._view.x));
+      this._view.y = Math.max(-my, Math.min(my, this._view.y));
+    }
+
+    _applyView() {
+      const g = this._geom();
+      const fit = this.getAttribute('fit') || 'cover';
+      if (fit !== 'cover' || !g) {
+        // Non-cover, or dimensions not known yet (before img load).
+        this._img.style.width = '100%';
+        this._img.style.height = '100%';
+        this._img.style.left = '50%';
+        this._img.style.top = '50%';
+        this._img.style.objectFit = fit;
+        this._img.style.objectPosition = this.getAttribute('position') || '50% 50%';
+        return;
+      }
+      // Cover baseline: img fills the frame on its tighter axis at s=1, so
+      // pan works immediately on the overflowing axis without zooming first.
+      // Width/height and left/top are all frame-% — depends only on the
+      // frame aspect ratio, so a responsive resize keeps the same crop. The
+      // spill layer mirrors the same box so its corners = image corners.
+      const k = g.base * this._view.s;
+      const w = (g.iw * k / g.fw * 100) + '%';
+      const h = (g.ih * k / g.fh * 100) + '%';
+      const l = (50 + this._view.x) + '%';
+      const t = (50 + this._view.y) + '%';
+      this._img.style.width = w; this._img.style.height = h;
+      this._img.style.left = l; this._img.style.top = t;
+      this._img.style.objectFit = '';
+      this._spill.style.width = w; this._spill.style.height = h;
+      this._spill.style.left = l; this._spill.style.top = t;
+    }
+
+    _commitView() {
+      const v = { s: this._view.s, x: this._view.x, y: this._view.y };
+      if (this._userUrl) v.u = this._userUrl;
+      // Framing-only (no u) persists too so an author-src slot remembers its
+      // crop; clearing the sidecar still falls through to src=.
+      if (this.id) setSlot(this.id, v);
+      else { this._local = v; }
+    }
+
+    _render() {
+      // Shape / mask. Presets use border-radius so the dashed ring can
+      // follow the rounded outline; clip-path is only applied for an
+      // explicit `mask` (the ring is hidden there since a rectangle
+      // dashed border chopped by an arbitrary polygon looks broken).
+      const mask = this.getAttribute('mask');
+      const shape = (this.getAttribute('shape') || 'rounded').toLowerCase();
+      let radius = '';
+      if (shape === 'circle') radius = '50%';
+      else if (shape === 'pill') radius = '9999px';
+      else if (shape === 'rounded') {
+        const n = parseFloat(this.getAttribute('radius'));
+        radius = (Number.isFinite(n) ? n : 12) + 'px';
+      }
+      this._frame.style.borderRadius = mask ? '' : radius;
+      this._frame.style.clipPath = mask || '';
+      this._ring.style.borderRadius = mask ? '' : radius;
+      this._ring.style.display = mask ? 'none' : '';
+
+      // Controls and reframe entry gate on this so share links stay read-only.
+      const editable = !!(window.omelette && window.omelette.writeFile);
+      this.toggleAttribute('data-editable', editable);
+      this._sub.style.display = editable ? '' : 'none';
+
+      // Content. The sidecar is also writable by the agent's write_file
+      // tool, so its value isn't guaranteed canvas-originated — only accept
+      // data:image/ URLs from it. The `src` attribute is author-controlled
+      // (Claude wrote it into the HTML) so it passes through unchanged.
+      let stored = this.id ? getSlot(this.id) : this._local;
+      if (stored && stored.u && !/^data:image\//i.test(stored.u)) stored = null;
+      const srcAttr = this.getAttribute('src') || '';
+      this._userUrl = (stored && stored.u) || null;
+      const url = this._userUrl || srcAttr;
+      // Don't clobber an in-flight reframe with a store-triggered re-render.
+      if (!this.hasAttribute('data-reframe')) {
+        this._view = {
+          s: stored && Number.isFinite(stored.s) ? clampS(stored.s) : 1,
+          x: stored && Number.isFinite(stored.x) ? stored.x : 0,
+          y: stored && Number.isFinite(stored.y) ? stored.y : 0,
+        };
+      }
+      this._cap.textContent = this.getAttribute('placeholder') || 'Drop an image';
+      // Toggle via style.display — the [hidden] attribute alone loses to
+      // the display:flex / display:block rules in the stylesheet above.
+      if (url) {
+        if (this._img.getAttribute('src') !== url) {
+          this._img.src = url;
+          this._ghost.src = url;
+        }
+        this._img.style.display = 'block';
+        this._empty.style.display = 'none';
+        this.setAttribute('data-filled', '');
+        this._clampView();
+        this._applyView();
+      } else {
+        this._img.style.display = 'none';
+        this._img.removeAttribute('src');
+        this._ghost.removeAttribute('src');
+        this._empty.style.display = 'flex';
+        this.removeAttribute('data-filled');
+      }
+    }
+  }
+
+  if (!customElements.get('image-slot')) {
+    customElements.define('image-slot', ImageSlot);
+  }
+})();
+
+</script>
+<script>
+/* Animations & interactions for UDA Sin Censura */
+(function () {
+  'use strict';
+
+  // ===== IntersectionObserver reveal =====
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+
+  document.querySelectorAll('.reveal, .prohib, .comp-row, .paso, .paradoja').forEach((el) => {
+    io.observe(el);
+  });
+
+  // ===== Redaction strike on hero =====
+  const redact = document.querySelector('.impacto .redact');
+  if (redact) {
+    const r2 = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          setTimeout(() => redact.classList.add('struck'), 700);
+          r2.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    r2.observe(redact);
+  }
+
+  // ===== Counter animation =====
+  const counterIO = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseFloat(el.dataset.count);
+        const decimals = (el.dataset.decimals | 0);
+        const duration = 1400;
+        const start = performance.now();
+        function tick(now) {
+          const t = Math.min(1, (now - start) / duration);
+          const eased = 1 - Math.pow(1 - t, 3);
+          const val = target * eased;
+          el.textContent = val.toFixed(decimals);
+          if (t < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+        counterIO.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('[data-count]').forEach((el) => counterIO.observe(el));
+
+  // ===== Caricatura takeover =====
+  const track = document.querySelector('.caricatura-track');
+  const stage = document.querySelector('.caricatura-stage');
+  const sticky = document.querySelector('.caricatura-sticky');
+  const progress = document.querySelector('.caricatura-progress');
+  if (track && stage) {
+    function updateCaricatura() {
+      const rect = track.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const total = Math.max(1, rect.height - vh);
+      const scrolled = -rect.top;
+      const p = Math.max(0, Math.min(1, scrolled / total));
+      let s;
+      if (p < 0.55) {
+        const t = p / 0.55;
+        const eased = 1 - Math.pow(1 - t, 3);
+        s = 0.4 + eased * 0.6;
+      } else { s = 1; }
+      stage.style.transform = 'scale(' + s + ')';
+      if (progress) progress.style.width = (p * 100) + '%';
+      if (s >= 0.98) { stage.classList.add('full'); sticky.classList.add('full'); }
+      else { stage.classList.remove('full'); sticky.classList.remove('full'); }
+    }
+    updateCaricatura();
+    window.addEventListener('scroll', updateCaricatura, { passive: true });
+    window.addEventListener('resize', updateCaricatura);
+  }
+})();
+
+</script>
+</body>
+</html>
