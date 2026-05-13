@@ -533,7 +533,7 @@ body::before {
   position: absolute;
   left: 0; right: 0;
   top: 5%; bottom: 5%;
-  background: var(--ink);
+  background: rgba(200, 49, 42, 0.55);
   transform: scaleX(0);
   transform-origin: left center;
   transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
@@ -877,8 +877,42 @@ body::before {
   overflow: hidden;
 }
 .caricatura-intro {
+  position: relative;
   padding: clamp(48px, 8vw, 90px) var(--pad-x) clamp(20px, 4vw, 40px);
   color: var(--white);
+  overflow: hidden;
+}
+.caricatura-intro::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(10,26,42,0.78) 0%, rgba(10,26,42,0.95) 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+.caricatura-intro-bg {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.55;
+}
+.caricatura-intro-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(0.4) contrast(1.05);
+}
+@media (max-width: 720px) {
+  .caricatura-intro-bg { grid-template-columns: repeat(2, 1fr); }
+  .caricatura-intro-bg img:nth-child(n+3) { display: none; }
+}
+.caricatura-intro .s-head {
+  position: relative;
+  z-index: 3;
 }
 .caricatura-intro .s-num { color: var(--cyan); }
 .caricatura-intro .s-titulo { color: var(--white); }
@@ -1036,19 +1070,23 @@ body::before {
   bottom: 32px;
   left: 50%;
   transform: translateX(-50%);
-  color: rgba(255,255,255,0.55);
-  font-size: clamp(11px, 1.6vw, 13px);
-  font-weight: 500;
+  color: rgba(255,255,255,0.85);
+  font-size: clamp(13px, 2.2vw, 18px);
+  font-weight: 700;
   letter-spacing: 0.04em;
   text-align: center;
   max-width: min(720px, 88vw);
-  line-height: 1.5;
+  line-height: 1.4;
   z-index: 5;
   opacity: 0;
   transition: opacity 0.5s;
-  font-style: italic;
   pointer-events: none;
+  background: rgba(10, 26, 42, 0.6);
+  padding: 8px 16px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
+.caricatura-caption-fixed strong { color: var(--cyan); font-weight: 800; }
 .caricatura-sticky.full .caricatura-caption-fixed { opacity: 1; }
 .caricatura-progress {
   position: absolute;
@@ -1703,6 +1741,12 @@ body::before {
   <!-- ═══ 8. CARICATURA TAKEOVER ═══ -->
   <section class="caricatura-takeover">
     <div class="caricatura-intro">
+      <div class="caricatura-intro-bg" aria-hidden="true">
+        <img src="https://udasincensura.github.io/info/caricatura1.png" alt="" loading="lazy">
+        <img src="https://udasincensura.github.io/info/caricatura2.png" alt="" loading="lazy">
+        <img src="https://udasincensura.github.io/info/caricatura3.png" alt="" loading="lazy">
+        <img src="https://udasincensura.github.io/info/caricatura4.jpeg" alt="" loading="lazy">
+      </div>
       <div class="s-head reveal">
         <div class="s-num">03 · Representación visual</div>
         <h3 class="s-titulo">Una imagen, <em>el resumen.</em></h3>
@@ -1723,7 +1767,7 @@ body::before {
           <span class="caricatura-overlay-label">Fig. 01 · Caricatura editorial</span>
         </div>
         <div class="caricatura-caption-fixed">
-          Esta NOesNuestraUDA.
+          Esta <strong>NO</strong>EsNuestraUDA
         </div>
       </div>
     </div>
