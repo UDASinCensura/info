@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ !DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -1972,6 +1972,468 @@ body::before {
         Las restricciones fueron diseñadas por quienes <strong>también son parte interesada</strong> en el resultado.
         Eso no es ética electoral: es administración del silencio.
       </p>
+    </div>
+  </section>
+
+  <!-- ═══ 7.5. REFORMA ESTATUTARIA — ARZOBISPO COMO VETO ═══ -->
+  <style>
+  /* ============ REFORMA ESTATUTARIA ============ */
+  .reforma {
+    background: var(--paper-2);
+    padding: clamp(48px, 8vw, 90px) var(--pad-x);
+    position: relative;
+    overflow: hidden;
+  }
+  .reforma::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--red-stamp) 0%, var(--navy) 50%, var(--red-stamp) 100%);
+  }
+  .reforma-inner {
+    max-width: var(--content-maxw);
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  /* ─ header ─ */
+  .reforma-head { margin-bottom: clamp(36px, 6vw, 56px); }
+  .reforma-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: clamp(10px, 1.8vw, 12px);
+    font-weight: 800;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--red-stamp);
+    background: var(--white);
+    border: 1.5px solid var(--red-stamp);
+    padding: 8px 14px;
+    margin-bottom: clamp(20px, 4vw, 28px);
+  }
+  .reforma-eyebrow::before {
+    content: '';
+    width: 8px; height: 8px;
+    background: var(--red-stamp);
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(200, 49, 42, 0.6);
+    animation: reformaPulse 1.6s ease-in-out infinite;
+  }
+  @keyframes reformaPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(200, 49, 42, 0.55); }
+    50%      { box-shadow: 0 0 0 9px rgba(200, 49, 42, 0); }
+  }
+  .reforma-titulo {
+    font-size: clamp(26px, 5.6vw, 50px);
+    font-weight: 900;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    max-width: 920px;
+    text-wrap: balance;
+  }
+  .reforma-titulo em { color: var(--red-stamp); font-style: normal; }
+  .reforma-sub {
+    margin-top: 18px;
+    font-size: clamp(13px, 2.2vw, 15.5px);
+    color: rgba(10, 26, 42, 0.65);
+    line-height: 1.65;
+    max-width: 720px;
+    font-weight: 400;
+  }
+  .reforma-sub strong { color: var(--ink); font-weight: 600; }
+
+  /* ─ two-column contrast ─ */
+  .reforma-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(12px, 2.2vw, 20px);
+    margin-bottom: clamp(36px, 6vw, 60px);
+    align-items: stretch;
+    position: relative;
+  }
+  .reforma-cols::before {
+    content: 'VS';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--ink);
+    color: var(--cyan);
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    width: 44px; height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.4s 0.4s ease;
+  }
+  .reforma-cols.in::before { opacity: 1; }
+
+  .reforma-col {
+    background: var(--white);
+    border: 1px solid var(--line);
+    padding: clamp(22px, 4vw, 32px);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s, border-color 0.25s;
+  }
+  .reforma-col:hover { transform: translateY(-2px); border-color: rgba(10, 26, 42, 0.4); }
+  .reforma-col::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--blue);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.7s ease-out;
+  }
+  .reforma-col.right::before { background: var(--red-stamp); transform-origin: bottom; transition-delay: 0.2s; }
+  .reforma-cols.in .reforma-col::before { transform: scaleY(1); }
+
+  .reforma-col-eyebrow {
+    font-size: clamp(10px, 1.7vw, 11.5px);
+    font-weight: 800;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 12px;
+  }
+  .reforma-col.right .reforma-col-eyebrow { color: var(--red-stamp); }
+  .reforma-col-tit {
+    font-size: clamp(18px, 3.2vw, 26px);
+    font-weight: 900;
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 14px;
+    text-wrap: balance;
+  }
+  .reforma-col-txt {
+    font-size: clamp(12.5px, 2vw, 14.5px);
+    color: rgba(10, 26, 42, 0.72);
+    line-height: 1.65;
+    font-weight: 400;
+    flex: 1;
+  }
+  .reforma-col-txt strong { color: var(--ink); font-weight: 700; }
+  .reforma-col-badge {
+    align-self: flex-start;
+    margin-top: 18px;
+    font-size: clamp(10px, 1.6vw, 11px);
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 7px 12px;
+    white-space: nowrap;
+  }
+  .reforma-col.left .reforma-col-badge {
+    background: rgba(0, 119, 182, 0.12);
+    color: var(--blue);
+  }
+  .reforma-col.right .reforma-col-badge {
+    background: var(--red-stamp);
+    color: var(--white);
+    transform: rotate(-2deg);
+  }
+
+  @media (max-width: 720px) {
+    .reforma-cols { grid-template-columns: 1fr; }
+    .reforma-cols::before { display: none; }
+  }
+
+  /* ─ quote ─ */
+  .reforma-quote {
+    background: var(--navy);
+    color: var(--white);
+    padding: clamp(40px, 7vw, 70px) clamp(28px, 5vw, 56px);
+    position: relative;
+    margin-bottom: clamp(36px, 6vw, 56px);
+    overflow: hidden;
+  }
+  .reforma-quote::before {
+    content: '“';
+    position: absolute;
+    top: -30px; left: clamp(18px, 4vw, 36px);
+    font-family: Georgia, serif;
+    font-size: clamp(160px, 26vw, 260px);
+    line-height: 1;
+    color: var(--cyan);
+    opacity: 0.16;
+    font-weight: 700;
+    pointer-events: none;
+  }
+  .reforma-quote::after {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--cyan);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.8s 0.2s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  .reforma-quote.in::after { transform: scaleY(1); }
+  .reforma-quote-txt {
+    position: relative;
+    font-size: clamp(17px, 3.2vw, 26px);
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: -0.005em;
+    max-width: 880px;
+    text-wrap: balance;
+  }
+  .reforma-quote-txt em { color: var(--cyan); font-style: normal; font-weight: 800; }
+  .reforma-quote-attr {
+    margin-top: 22px;
+    font-size: clamp(10px, 1.7vw, 11.5px);
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  /* ─ action blocks (opacidad / CES) ─ */
+  .reforma-action {
+    background: var(--white);
+    border: 1px solid var(--line);
+    padding: clamp(22px, 4vw, 34px);
+    margin-bottom: clamp(14px, 2.5vw, 18px);
+    display: grid;
+    grid-template-columns: clamp(48px, 8vw, 64px) 1fr;
+    gap: clamp(16px, 3vw, 26px);
+    align-items: start;
+    position: relative;
+  }
+  .reforma-action-ico {
+    width: clamp(48px, 8vw, 64px);
+    height: clamp(48px, 8vw, 64px);
+    background: var(--ink);
+    color: var(--cyan);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .reforma-action-ico.alert { background: var(--red-stamp); color: var(--white); }
+  .reforma-action-ico.civic { background: var(--cyan); color: var(--navy); }
+  .reforma-action-ico svg { width: 50%; height: 50%; }
+  .reforma-action-body { min-width: 0; }
+  .reforma-action-eyebrow {
+    font-size: clamp(10px, 1.7vw, 11.5px);
+    font-weight: 800;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--red-stamp);
+    margin-bottom: 10px;
+  }
+  .reforma-action-tit {
+    font-size: clamp(18px, 3.2vw, 24px);
+    font-weight: 900;
+    line-height: 1.18;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    margin-bottom: 14px;
+    text-wrap: balance;
+  }
+  .reforma-action-tit em { color: var(--red-stamp); font-style: normal; }
+  .reforma-action-txt {
+    font-size: clamp(12.5px, 2vw, 14.5px);
+    color: rgba(10, 26, 42, 0.74);
+    line-height: 1.65;
+    margin-bottom: 6px;
+  }
+  .reforma-action-txt strong { color: var(--ink); font-weight: 700; }
+  .reforma-action-txt a {
+    color: var(--blue);
+    text-decoration: underline;
+    text-decoration-color: rgba(0, 119, 182, 0.4);
+    text-underline-offset: 3px;
+    font-weight: 600;
+    word-break: break-word;
+  }
+  .reforma-action-txt a:hover { text-decoration-color: var(--blue); }
+  .reforma-action-list {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .reforma-action-list li {
+    position: relative;
+    padding-left: 26px;
+    font-size: clamp(12px, 2vw, 13.5px);
+    color: rgba(10, 26, 42, 0.78);
+    line-height: 1.55;
+  }
+  .reforma-action-list li strong { color: var(--ink); font-weight: 700; }
+  .reforma-action-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 14px;
+    height: 2px;
+    background: var(--red-stamp);
+  }
+  .reforma-action-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 6px;
+    background: var(--navy);
+    color: var(--white);
+    text-decoration: none;
+    padding: 13px 22px;
+    font-size: clamp(11px, 1.9vw, 12.5px);
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    transition: background 0.2s ease, transform 0.2s ease, gap 0.2s ease;
+  }
+  .reforma-action-cta:hover {
+    background: var(--ink);
+    transform: translateX(3px);
+    gap: 16px;
+  }
+  .reforma-action-cta svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+  @media (max-width: 540px) {
+    .reforma-action {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+  }
+
+  /* CES — inverted dark block */
+  .reforma-ces { background: var(--ink); border-color: var(--ink); }
+  .reforma-ces .reforma-action-eyebrow { color: var(--cyan); }
+  .reforma-ces .reforma-action-tit { color: var(--white); }
+  .reforma-ces .reforma-action-tit em { color: var(--cyan); }
+  .reforma-ces .reforma-action-txt { color: rgba(255, 255, 255, 0.7); }
+  .reforma-ces .reforma-action-txt strong { color: var(--white); }
+  .reforma-ces .reforma-action-txt a {
+    color: var(--cyan);
+    text-decoration-color: rgba(0, 212, 255, 0.4);
+  }
+  .reforma-ces .reforma-action-txt a:hover { text-decoration-color: var(--cyan); }
+  .reforma-ces .reforma-action-list li { color: rgba(255, 255, 255, 0.75); }
+  .reforma-ces .reforma-action-list li strong { color: var(--white); }
+  .reforma-ces .reforma-action-list li::before { background: var(--cyan); }
+  .reforma-ces .reforma-action-cta { background: var(--cyan); color: var(--navy); }
+  .reforma-ces .reforma-action-cta:hover { background: var(--white); color: var(--navy); }
+  </style>
+
+  <section class="reforma">
+    <div class="reforma-inner">
+      <header class="reforma-head reveal">
+        <div class="reforma-eyebrow">Nueva amenaza a la democracia universitaria</div>
+        <h2 class="reforma-titulo">
+          La reforma al estatuto que entrega <em>poder de veto al Arzobispo</em> sobre las candidaturas a rector.
+        </h2>
+        <p class="reforma-sub">
+          El Consejo Universitario impulsa una reforma estatutaria para que el Arzobispo de Cuenca — Canciller histórico de la UDA — deba <strong>aprobar previamente</strong> a cada candidato antes de que pueda inscribirse. El Canciller no se discute; <strong>el poder de veto, sí.</strong>
+        </p>
+      </header>
+
+      <!-- ▼ Two-column contrast ▼ -->
+      <div class="reforma-cols reveal">
+        <article class="reforma-col left">
+          <div class="reforma-col-eyebrow">Lo que siempre fue</div>
+          <h3 class="reforma-col-tit">El Canciller eclesiástico — figura aceptada por toda la comunidad.</h3>
+          <p class="reforma-col-txt">
+            El Arzobispo de Cuenca ejerce funciones de <strong>Canciller</strong> de la UDA conforme al estatuto histórico de la universidad. Es un rol heredado de la tradición de las universidades católicas y <strong>no es objeto de cuestionamiento</strong>: la comunidad universitaria lo reconoce y respeta desde la fundación.
+          </p>
+          <span class="reforma-col-badge">Tradición aceptada</span>
+        </article>
+
+        <article class="reforma-col right">
+          <div class="reforma-col-eyebrow">Lo que quieren ahora</div>
+          <h3 class="reforma-col-tit">Un poder de veto sobre quién puede ser candidato a rector.</h3>
+          <p class="reforma-col-txt">
+            La reforma estatutaria va mucho más lejos: pretende que <strong>el Canciller apruebe previamente</strong> cada candidatura antes de que pueda inscribirse en el proceso electoral. Convierte una figura ceremonial en un <strong>filtro político</strong> sobre quién puede o no aspirar a dirigir la universidad.
+          </p>
+          <span class="reforma-col-badge">Inaceptable</span>
+        </article>
+      </div>
+
+      <!-- ▼ Quote ▼ -->
+      <blockquote class="reforma-quote reveal">
+        <p class="reforma-quote-txt">
+          Una universidad católica puede tener un Canciller eclesiástico. Lo que <em>no puede tener</em> es un proceso electoral donde el candidato necesite aprobación previa de una autoridad no elegida por la comunidad universitaria.
+        </p>
+        <div class="reforma-quote-attr">— Principio de autonomía y autogobierno universitario</div>
+      </blockquote>
+
+      <!-- ▼ Opacidad institucional ▼ -->
+      <article class="reforma-action reveal">
+        <div class="reforma-action-ico alert" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="13"/>
+            <line x1="12" y1="16.5" x2="12.01" y2="16.5"/>
+          </svg>
+        </div>
+        <div class="reforma-action-body">
+          <div class="reforma-action-eyebrow">Opacidad institucional</div>
+          <h3 class="reforma-action-tit">Las resoluciones del Consejo Universitario <em>no se pueden leer ni descargar.</em></h3>
+          <p class="reforma-action-txt">
+            La página oficial <a href="https://www.uazuay.edu.ec/launiversidad/reglamentos-resoluciones" target="_blank" rel="noopener">uazuay.edu.ec/launiversidad/reglamentos-resoluciones</a> publica solamente los <strong>títulos y números</strong> de las resoluciones del Consejo Universitario, pero <strong>no permite acceder al texto</strong> de las decisiones que afectan a toda la comunidad.
+          </p>
+          <ul class="reforma-action-list">
+            <li>Aparecen los títulos — <strong>sin posibilidad de descarga.</strong></li>
+            <li>No se publica el contenido íntegro de las resoluciones aprobadas.</li>
+            <li>Viola la <strong>LOTAIP, Art. 7</strong> — Transparencia Activa: las instituciones deben difundir, por iniciativa propia, todas sus decisiones de interés general.</li>
+          </ul>
+          <a class="reforma-action-cta" href="https://www.dpe.gob.ec/" target="_blank" rel="noopener">
+            Solicita acceso ante la Defensoría del Pueblo
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"/>
+              <path d="m13 5 7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- ▼ Exigencia CES ▼ -->
+      <article class="reforma-action reforma-ces reveal">
+        <div class="reforma-action-ico civic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 21h18"/>
+            <path d="M5 21V10l7-5 7 5v11"/>
+            <path d="M10 21v-6h4v6"/>
+            <path d="M8 10h8"/>
+          </svg>
+        </div>
+        <div class="reforma-action-body">
+          <div class="reforma-action-eyebrow">Exigencia al CES</div>
+          <h3 class="reforma-action-tit">Exigimos al CES que <em>no apruebe</em> reformas estatutarias convenientes previo a elecciones.</h3>
+          <p class="reforma-action-txt">
+            El <strong>Consejo de Educación Superior (CES)</strong> debe aprobar cualquier reforma estatutaria universitaria conforme a la LOES. Aprobar una reforma que amplía poderes de veto sobre candidaturas <strong>a pocas semanas</strong> de un proceso electoral en curso constituye una interferencia institucional directa en la democracia universitaria.
+          </p>
+          <ul class="reforma-action-list">
+            <li>La autonomía universitaria es <strong>responsable y transparente</strong>, no instrumento para alterar reglas electorales en marcha.</li>
+            <li>La comunidad universitaria exige que el CES verifique que ninguna reforma cambie las condiciones de un proceso electoral ya convocado.</li>
+            <li>Modificar quién puede candidatizarse a pocas semanas de la elección no es reforma: <strong>es manipulación.</strong></li>
+          </ul>
+          <a class="reforma-action-cta" href="https://www.ces.gob.ec" target="_blank" rel="noopener">
+            Conoce las competencias del CES
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"/>
+              <path d="m13 5 7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </article>
     </div>
   </section>
 
