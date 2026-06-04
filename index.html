@@ -1831,12 +1831,148 @@ body::before {
   .victorias-btn { margin-left: 0; width: 100%; justify-content: center; }
 }
 </style>
+<style>
+/* ============ MENÚ SUPERIOR (NAV) ============ */
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  background: rgba(10, 26, 42, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 212, 255, 0.18);
+}
+.topnav::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cyan) 0%, var(--blue) 50%, var(--cyan) 100%);
+}
+.topnav-inner {
+  max-width: var(--content-maxw);
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: clamp(10px, 2vw, 14px) var(--pad-x);
+}
+.topnav-brand {
+  font-size: clamp(15px, 2.6vw, 18px);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.topnav-brand .hash { color: var(--cyan); }
+.topnav-links {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: clamp(2px, 1vw, 8px);
+}
+.topnav-links a {
+  position: relative;
+  font-size: clamp(11px, 1.5vw, 12.5px);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.62);
+  text-decoration: none;
+  padding: 8px clamp(8px, 1.4vw, 13px);
+  transition: color 0.2s ease;
+}
+.topnav-links a:hover { color: var(--white); }
+.topnav-links a.active { color: var(--cyan); }
+.topnav-links a.active::after {
+  content: '';
+  position: absolute;
+  left: clamp(8px, 1.4vw, 13px);
+  right: clamp(8px, 1.4vw, 13px);
+  bottom: 1px;
+  height: 2px;
+  background: var(--cyan);
+}
+.topnav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  margin-left: auto;
+  width: 44px;
+  height: 40px;
+  padding: 0 10px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  cursor: pointer;
+}
+.topnav-toggle span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--cyan);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+.topnav.open .topnav-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.topnav.open .topnav-toggle span:nth-child(2) { opacity: 0; }
+.topnav.open .topnav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+@media (max-width: 860px) {
+  .topnav-toggle { display: flex; }
+  .topnav-links {
+    position: absolute;
+    top: 100%;
+    left: 0; right: 0;
+    margin-left: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: var(--ink);
+    border-bottom: 1px solid rgba(0, 212, 255, 0.18);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .topnav.open .topnav-links { max-height: 70vh; }
+  .topnav-links a {
+    padding: 15px var(--pad-x);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .topnav-links a.active::after { display: none; }
+  .topnav-links a.active { background: rgba(0, 212, 255, 0.08); }
+}
+
+/* offset anchors so the sticky nav doesn't cover section tops */
+#top, #codigo, #reforma, #padron, #caricatura, #entrevistas, #actua {
+  scroll-margin-top: clamp(58px, 11vw, 74px);
+}
+</style>
 </head>
 <body>
 <div class="wrap">
 
+  <!-- ═══ MENÚ SUPERIOR ═══ -->
+  <header class="topnav" id="topnav">
+    <div class="topnav-inner">
+      <a class="topnav-brand" href="#top"><span class="hash">#</span>UDASinCensura</a>
+      <button class="topnav-toggle" type="button" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="topnav-links">
+        <a href="#codigo">Código</a>
+        <a href="#reforma">Reforma</a>
+        <a href="#padron">Padrón</a>
+        <a href="#caricatura">Caricatura</a>
+        <a href="#entrevistas">Entrevistas</a>
+        <a href="#actua">Actúa</a>
+      </nav>
+    </div>
+  </header>
+
   <!-- ═══ 1. IMPACTO ═══ -->
-  <section class="impacto">
+  <section class="impacto" id="top">
     <div class="impacto-grid">
       <div class="impacto-meta reveal">
         <div class="follow-cue" aria-hidden="true">
@@ -1936,7 +2072,7 @@ body::before {
   </div>
 
   <!-- ═══ 4. STATS RÁPIDOS ═══ -->
-  <section class="seccion">
+  <section class="seccion" id="codigo">
     <div class="s-head reveal">
       <div class="s-num">01 · Lo que el código prohíbe</div>
       <h3 class="s-titulo">Cinco prohibiciones, <em>una sola sanción.</em></h3>
@@ -2448,7 +2584,7 @@ body::before {
   .reforma-ces .reforma-action-cta:hover { background: var(--white); color: var(--navy); }
   </style>
 
-  <section class="reforma">
+  <section class="reforma" id="reforma">
     <div class="reforma-inner">
       <header class="reforma-head reveal">
         <div class="reforma-eyebrow">Nueva amenaza a la democracia universitaria</div>
@@ -2801,7 +2937,7 @@ body::before {
   }
   </style>
 
-  <section class="seccion padron">
+  <section class="seccion padron" id="padron">
     <div class="s-head reveal">
       <div class="section-tag">El padrón electoral</div>
       <h3 class="s-titulo">¿Por qué titularizar <em>20 profesores</em> justo antes de las elecciones?</h3>
@@ -2911,13 +3047,13 @@ body::before {
       <p class="padron-logro-mini">
         Contamos con evidencia parcial de los cambios. Si tienes acceso al SGU y detectas
         irregularidades, escríbenos de forma anónima a
-        <a href="/cdn-cgi/l/email-protection#6f1a0b0e1c06010c0a011c1a1d0e2f1f1d001b000141020a"><span class="__cf_email__" data-cfemail="d6a3b2b7a5bfb8b5b3b8a5a3a4b796a6a4b9a2b9b8f8bbb3">[email&#160;protected]</span></a>
+        <a href="/cdn-cgi/l/email-protection#cbbeafaab8a2a5a8aea5b8beb9aa8bbbb9a4bfa4a5e5a6ae"><span class="__cf_email__" data-cfemail="0f7a6b6e7c66616c6a617c7a7d6e4f7f7d607b606121626a">[email&#160;protected]</span></a>
       </p>
     </div>
   </section>
 
   <!-- ═══ 8. CARICATURA TAKEOVER ═══ -->
-  <section class="caricatura-takeover">
+  <section class="caricatura-takeover" id="caricatura">
     <div class="caricatura-intro">
       <div class="caricatura-intro-bg" aria-hidden="true">
         <img src="https://udasincensura.github.io/info/caricatura1.png" alt="" loading="lazy">
@@ -2966,7 +3102,7 @@ body::before {
   </section>
 
   <!-- ═══ 9. ENTREVISTAS YOUTUBE ═══ -->
-  <section class="seccion">
+  <section class="seccion" id="entrevistas">
     <div class="s-head reveal">
       <div class="s-num">04 · Voces que ya hablaron</div>
       <h3 class="s-titulo">Entrevistas <em>en YouTube.</em></h3>
@@ -3015,7 +3151,7 @@ body::before {
   </section>
 
   <!-- ═══ 10. PASOS / ACCIÓN ═══ -->
-  <section class="seccion seccion-paper-2">
+  <section class="seccion seccion-paper-2" id="actua">
     <div class="s-head reveal">
       <div class="s-num">05 · Lo que sí podemos hacer</div>
       <h3 class="s-titulo">Los estudiantes <em>tenemos voz.</em></h3>
@@ -3875,5 +4011,48 @@ body::before {
 })();
 
 </script>
+<script>
+/* Menú superior — toggle móvil + resaltado de sección activa */
+(function () {
+  'use strict';
+  var nav = document.getElementById('topnav');
+  if (!nav) return;
+  var toggle = nav.querySelector('.topnav-toggle');
+  var links = Array.prototype.slice.call(nav.querySelectorAll('.topnav-links a'));
+
+  if (toggle) {
+    toggle.addEventListener('click', function () {
+      var open = nav.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+
+  var map = {};
+  links.forEach(function (a) {
+    var id = (a.getAttribute('href') || '').replace('#', '');
+    if (id) map[id] = a;
+    a.addEventListener('click', function () {
+      nav.classList.remove('open');
+      if (toggle) toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        links.forEach(function (a) { a.classList.remove('active'); });
+        var a = map[e.target.id];
+        if (a) a.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+
+  Object.keys(map).forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) io.observe(el);
+  });
+})();
+</script>
+
 </body>
 </html>
