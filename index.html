@@ -1739,11 +1739,218 @@ body::before {
   .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1px solid var(--line); }
 }
 
+</style>
+<style>
+/* ============ MARCADOR DE VICTORIAS (HERO) ============ */
+.victorias {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(16px, 3vw, 30px);
+  margin-top: clamp(26px, 5vw, 40px);
+  padding: clamp(16px, 3vw, 22px) clamp(18px, 3.2vw, 26px);
+  background: rgba(0, 35, 64, 0.45);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-left: 4px solid var(--cyan);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.victorias-ico {
+  flex-shrink: 0;
+  width: clamp(46px, 8vw, 58px);
+  height: clamp(46px, 8vw, 58px);
+  background: var(--cyan);
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.victorias-ico svg { width: 54%; height: 54%; }
+.victorias-score { display: flex; flex-direction: column; gap: 9px; min-width: 0; }
+.victorias-top { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.victorias-count {
+  font-size: clamp(28px, 6.5vw, 44px);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  color: var(--white);
+  font-variant-numeric: tabular-nums;
+}
+.victorias-count b { color: var(--cyan); font-weight: 900; }
+.victorias-count .sep,
+.victorias-count .total { color: rgba(255, 255, 255, 0.4); }
+.victorias-label {
+  font-size: clamp(10px, 1.7vw, 11.5px);
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+.victorias-pips { display: flex; gap: 6px; }
+.victorias-pip {
+  width: clamp(26px, 5.5vw, 42px);
+  height: 5px;
+  background: rgba(255, 255, 255, 0.16);
+}
+.victorias-pip.won {
+  background: var(--cyan);
+  box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.55);
+  animation: victoriaPulse 2s ease-in-out infinite;
+}
+@keyframes victoriaPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.5); }
+  50%      { box-shadow: 0 0 0 6px rgba(0, 212, 255, 0); }
+}
+.victorias-btn {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--cyan);
+  color: var(--navy);
+  text-decoration: none;
+  padding: 14px clamp(18px, 3vw, 24px);
+  font-size: clamp(11px, 1.9vw, 13px);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: transform 0.2s ease, gap 0.2s ease, background 0.2s ease;
+}
+.victorias-btn:hover { transform: translateY(-2px); gap: 16px; background: var(--white); }
+.victorias-btn svg {
+  width: 16px; height: 16px;
+  flex-shrink: 0;
+  animation: victoriaBob 1.8s ease-in-out infinite;
+}
+@keyframes victoriaBob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(3px); }
+}
+@media (max-width: 540px) {
+  .victorias { gap: 14px; }
+  .victorias-btn { margin-left: 0; width: 100%; justify-content: center; }
+}
+</style>
+<style>
+/* ============ MENÚ SUPERIOR (NAV) ============ */
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  background: rgba(10, 26, 42, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 212, 255, 0.18);
+}
+.topnav::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cyan) 0%, var(--blue) 50%, var(--cyan) 100%);
+}
+.topnav-inner {
+  max-width: var(--content-maxw);
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: clamp(10px, 2vw, 14px) var(--pad-x);
+}
+.topnav-brand {
+  font-size: clamp(15px, 2.6vw, 18px);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.topnav-brand .hash { color: var(--cyan); }
+.topnav-links {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: clamp(2px, 1vw, 8px);
+}
+.topnav-links a {
+  position: relative;
+  font-size: clamp(11px, 1.5vw, 12.5px);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.62);
+  text-decoration: none;
+  padding: 8px clamp(8px, 1.4vw, 13px);
+  transition: color 0.2s ease;
+}
+.topnav-links a:hover { color: var(--white); }
+.topnav-links a.active { color: var(--cyan); }
+.topnav-links a.active::after {
+  content: '';
+  position: absolute;
+  left: clamp(8px, 1.4vw, 13px);
+  right: clamp(8px, 1.4vw, 13px);
+  bottom: 1px;
+  height: 2px;
+  background: var(--cyan);
+}
+.topnav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  margin-left: auto;
+  width: 44px;
+  height: 40px;
+  padding: 0 10px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  cursor: pointer;
+}
+.topnav-toggle span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--cyan);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+.topnav.open .topnav-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.topnav.open .topnav-toggle span:nth-child(2) { opacity: 0; }
+.topnav.open .topnav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+@media (max-width: 860px) {
+  .topnav-toggle { display: flex; }
+  .topnav-links {
+    position: absolute;
+    top: 100%;
+    left: 0; right: 0;
+    margin-left: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: var(--ink);
+    border-bottom: 1px solid rgba(0, 212, 255, 0.18);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .topnav.open .topnav-links { max-height: 70vh; }
+  .topnav-links a {
+    padding: 15px var(--pad-x);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .topnav-links a.active::after { display: none; }
+  .topnav-links a.active { background: rgba(0, 212, 255, 0.08); }
+}
+
 /* offset anchors so the sticky nav doesn't cover section tops */
 #top, #codigo, #reforma, #denuncia-ces, #padron, #caricatura, #entrevistas, #actua {
   scroll-margin-top: clamp(58px, 11vw, 74px);
 }
+</style>
 
+  <style>
 /* ============ ESTILOS EXCLUSIVOS PARA DENUNCIA CES ============ */
 #denuncia-ces .reforma-cols::before { display: none; }
 #denuncia-ces .reforma-col.dark {
@@ -2517,46 +2724,7 @@ body::before {
       </article>
     </div>
   </section>
-
-  <!-- ═══ DENUNCIA CES ═══ -->
-  <section class="seccion" id="denuncia-ces">
-    <div class="s-head reveal">
-      <div class="s-num">03 · Alerta al CES</div>
-      <h3 class="s-titulo">Exautoridades y profesores <em>rompen el silencio.</em></h3>
-      <p class="s-sub">Voces de experiencia presentaron una denuncia formal ante el Consejo de Educación Superior alertando sobre actuaciones "groseramente ilegales" diseñadas para forzar un proceso electoral con candidato único.</p>
-    </div>
-
-    <div class="reforma-cols reveal" data-delay="1">
-      <article class="reforma-col left">
-        <div class="reforma-col-eyebrow">El núcleo de la denuncia</div>
-        <h3 class="reforma-col-tit">"Interferir en el proceso electoral para conseguir el apoyo a un solo candidato"</h3>
-        <p class="reforma-col-txt">
-          Quienes firman no son aspirantes al cargo, sino exautoridades que miran con <strong>indignación</strong> cómo se adoptan decisiones que afectan la integridad y tradición de la Universidad. Advierten que los recientes cambios reglamentarios carecen de escrúpulos y buscan <strong>"esconder procesos y actuaciones"</strong>.
-        </p>
-        <span class="reforma-col-badge" style="background: rgba(200, 49, 42, 0.12); color: var(--red-stamp);">Manipulación Electoral</span>
-      </article>
-
-      <article class="reforma-col right dark">
-        <div class="reforma-col-eyebrow">Documento oficial</div>
-        <h3 class="reforma-col-tit">Denuncia entregada el 31 de julio de 2026</h3>
-        <p class="reforma-col-txt">
-          El documento advierte que donde se asfixia el pluralismo, la libertad de expresión y la publicidad obligatoria de los actos, <strong>"bien podemos decir, no existe Universidad."</strong>
-        </p>
-        <a class="cta-codigo" href="https://github.com/UDASinCensura/info/blob/main/UDAsinCensura%20Difundir.pdf" target="_blank" rel="noopener">
-          <div class="cta-codigo-ico">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-          </div>
-          <div class="cta-codigo-txt">
-            <div class="cta-codigo-tit">Ver la Denuncia Completa</div>
-            <div class="cta-codigo-sub">PDF con sello de recibido por el CES</div>
-          </div>
-          <div class="cta-codigo-arrow">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </div>
-        </a>
-      </article>
-    </div>
-  </section>
+  
 
   <!-- ═══ 7.6. EL PADRÓN MANIPULADO ═══ -->
   <style>
@@ -2807,6 +2975,46 @@ body::before {
   }
   </style>
 
+  <!-- ═══ DENUNCIA CES ═══ -->
+  <section class="seccion" id="denuncia-ces">
+    <div class="s-head reveal">
+      <div class="s-num">03 · Alerta al CES</div>
+      <h3 class="s-titulo">Exautoridades y profesores <em>rompen el silencio.</em></h3>
+      <p class="s-sub">Voces de experiencia presentaron una denuncia formal ante el Consejo de Educación Superior alertando sobre actuaciones "groseramente ilegales" diseñadas para forzar un proceso electoral con candidato único.</p>
+    </div>
+
+    <div class="reforma-cols reveal" data-delay="1">
+      <article class="reforma-col left">
+        <div class="reforma-col-eyebrow">El núcleo de la denuncia</div>
+        <h3 class="reforma-col-tit">"Interferir en el proceso electoral para conseguir el apoyo a un solo candidato"</h3>
+        <p class="reforma-col-txt">
+          Quienes firman no son aspirantes al cargo, sino exautoridades que miran con <strong>indignación</strong> cómo se adoptan decisiones que afectan la integridad y tradición de la Universidad. Advierten que los recientes cambios reglamentarios carecen de escrúpulos y buscan <strong>"esconder procesos y actuaciones"</strong>.
+        </p>
+        <span class="reforma-col-badge" style="background: rgba(200, 49, 42, 0.12); color: var(--red-stamp);">Manipulación Electoral</span>
+      </article>
+
+      <article class="reforma-col right dark">
+        <div class="reforma-col-eyebrow">Documento oficial</div>
+        <h3 class="reforma-col-tit">Denuncia entregada el 31 de julio de 2026</h3>
+        <p class="reforma-col-txt">
+          El documento advierte que donde se asfixia el pluralismo, la libertad de expresión y la publicidad obligatoria de los actos, <strong>"bien podemos decir, no existe Universidad."</strong>
+        </p>
+        <a class="cta-codigo" href="https://github.com/UDASinCensura/info/blob/main/UDAsinCensura%20Difundir.pdf" target="_blank" rel="noopener">
+          <div class="cta-codigo-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <div class="cta-codigo-txt">
+            <div class="cta-codigo-tit">Ver la Denuncia Completa</div>
+            <div class="cta-codigo-sub">PDF con sello de recibido por el CES</div>
+          </div>
+          <div class="cta-codigo-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </div>
+        </a>
+      </article>
+    </div>
+  </section>
+
   <section class="seccion padron" id="padron">
     <div class="s-head reveal">
       <div class="section-tag">El padrón electoral</div>
@@ -2932,7 +3140,7 @@ body::before {
         <img src="https://udasincensura.github.io/info/caricatura4.jpeg" alt="" loading="lazy">
       </div>
       <div class="s-head reveal">
-        <div class="s-num">04 · Representación visual</div>
+        <div class="s-num">03 · Representación visual</div>
         <h3 class="s-titulo">Caricatura <em>de la semana.</em></h3>
         <p class="s-sub">Sigue bajando — la caricatura va a tomar toda la pantalla mientras la lees.</p>
       </div>
@@ -2974,7 +3182,7 @@ body::before {
   <!-- ═══ 9. ENTREVISTAS YOUTUBE ═══ -->
   <section class="seccion" id="entrevistas">
     <div class="s-head reveal">
-      <div class="s-num">05 · Voces que ya hablaron</div>
+      <div class="s-num">04 · Voces que ya hablaron</div>
       <h3 class="s-titulo">Entrevistas <em>en YouTube.</em></h3>
       <p class="s-sub">Conversaciones públicas con miembros de la comunidad universitaria sobre el Código y sus implicaciones para la autonomía y la libertad de expresión.</p>
     </div>
@@ -3023,7 +3231,7 @@ body::before {
   <!-- ═══ 10. PASOS / ACCIÓN ═══ -->
   <section class="seccion seccion-paper-2" id="actua">
     <div class="s-head reveal">
-      <div class="s-num">06 · Lo que sí podemos hacer</div>
+      <div class="s-num">05 · Lo que sí podemos hacer</div>
       <h3 class="s-titulo">Los estudiantes <em>tenemos voz.</em></h3>
       <p class="s-sub">El Código restringe a candidatos, no a la comunidad estudiantil. Informar, difundir y exigir sigue siendo perfectamente legal — y necesario.</p>
     </div>
@@ -3613,7 +3821,7 @@ body::before {
         return;
       }
       // toDataUrl can take hundreds of ms on a large photo. A Clear or a
-      // newer drop during that window window would be clobbered when this await
+      // newer drop during that window would be clobbered when this await
       // resumes — bump + capture a generation so stale encodes bail.
       const gen = ++this._gen;
       try {
@@ -3925,4 +4133,4 @@ body::before {
 </script>
 
 </body>
-</html>
+</html> 
