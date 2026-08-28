@@ -1884,6 +1884,8 @@ body::before {
   padding: 8px clamp(8px, 1.4vw, 13px);
   transition: color 0.2s ease;
 }
+.topnav-links a { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.nav-trofeo { width: 13px; height: 13px; flex-shrink: 0; color: var(--cyan); }
 .topnav-links a:hover { color: var(--white); }
 .topnav-links a.active { color: var(--cyan); }
 .topnav-links a.active::after {
@@ -1919,7 +1921,7 @@ body::before {
 .topnav.open .topnav-toggle span:nth-child(2) { opacity: 0; }
 .topnav.open .topnav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-@media (max-width: 860px) {
+@media (max-width: 1100px) {
   .topnav-toggle { display: flex; }
   .topnav-links {
     position: absolute;
@@ -1949,41 +1951,17 @@ body::before {
   scroll-margin-top: clamp(58px, 11vw, 74px);
 }
 </style>
-
-  <style>
+<style>
 /* ============ ESTILOS EXCLUSIVOS PARA DENUNCIA CES ============ */
 #denuncia-ces .reforma-cols::before { display: none; }
-#denuncia-ces .reforma-col.dark {
-  background: var(--ink);
-  color: var(--white);
-  border-color: var(--ink);
-  display: flex;
-  flex-direction: column;
-}
-#denuncia-ces .reforma-col.dark::before {
-  background: var(--cyan);
-}
-#denuncia-ces .reforma-col.dark .reforma-col-tit {
-  color: var(--white);
-}
-#denuncia-ces .reforma-col.dark .reforma-col-txt {
-  color: rgba(255,255,255,0.7);
-}
-#denuncia-ces .reforma-col.dark .reforma-col-eyebrow {
-  color: var(--cyan);
-}
-#denuncia-ces .cta-codigo {
-  margin-top: auto;
-  background: var(--navy);
-  border-left-color: var(--cyan);
-}
-#denuncia-ces .cta-codigo:hover {
-  background: rgba(0, 212, 255, 0.1);
-}
-#denuncia-ces .cta-codigo-ico {
-  background: var(--cyan);
-  color: var(--navy);
-}
+#denuncia-ces .reforma-col.dark { background: var(--ink); color: var(--white); border-color: var(--ink); display: flex; flex-direction: column; }
+#denuncia-ces .reforma-col.dark::before { background: var(--cyan); }
+#denuncia-ces .reforma-col.dark .reforma-col-tit { color: var(--white); }
+#denuncia-ces .reforma-col.dark .reforma-col-txt { color: rgba(255,255,255,0.7); }
+#denuncia-ces .reforma-col.dark .reforma-col-eyebrow { color: var(--cyan); }
+#denuncia-ces .cta-codigo { margin-top: auto; background: var(--navy); border-left-color: var(--cyan); }
+#denuncia-ces .cta-codigo:hover { background: rgba(0, 212, 255, 0.1); }
+#denuncia-ces .cta-codigo-ico { background: var(--cyan); color: var(--navy); }
 </style>
 </head>
 <body>
@@ -1998,9 +1976,9 @@ body::before {
       </button>
       <nav class="topnav-links">
         <a href="#codigo">Código</a>
-        <a href="#reforma">Reforma</a>
+        <a href="#reforma">Reforma<svg class="nav-trofeo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 9H5.5a2.5 2.5 0 0 1 0-5H7"/><path d="M17 9h1.5a2.5 2.5 0 0 0 0-5H17"/><path d="M7 3h10v6a5 5 0 0 1-10 0V3Z"/><path d="M12 14v4"/><path d="M8.5 21h7l-.7-3h-5.6Z"/></svg></a>
         <a href="#denuncia-ces">Denuncia CES</a>
-        <a href="#padron">Padrón</a>
+        <a href="#padron">Padrón<svg class="nav-trofeo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 9H5.5a2.5 2.5 0 0 1 0-5H7"/><path d="M17 9h1.5a2.5 2.5 0 0 0 0-5H17"/><path d="M7 3h10v6a5 5 0 0 1-10 0V3Z"/><path d="M12 14v4"/><path d="M8.5 21h7l-.7-3h-5.6Z"/></svg></a>
         <a href="#caricatura">Caricatura</a>
         <a href="#entrevistas">Entrevistas</a>
         <a href="#actua">Actúa</a>
@@ -2057,17 +2035,17 @@ body::before {
         </div>
         <div class="victorias-score">
           <div class="victorias-top">
-            <span class="victorias-count"><b>1</b><span class="sep">/</span><span class="total">3</span></span>
+            <span class="victorias-count"><b>2</b><span class="sep">/</span><span class="total">3</span></span>
             <span class="victorias-label">Victorias conseguidas</span>
           </div>
           <div class="victorias-pips" aria-hidden="true">
             <span class="victorias-pip won"></span>
-            <span class="victorias-pip"></span>
+            <span class="victorias-pip won"></span>
             <span class="victorias-pip"></span>
           </div>
         </div>
-        <a class="victorias-btn" href="#primera-victoria">
-          Leer la primera victoria
+        <a class="victorias-btn" href="#reforma">
+          Leer la segunda victoria
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <line x1="12" y1="5" x2="12" y2="19"/>
             <polyline points="6 13 12 19 18 13"/>
@@ -2619,9 +2597,212 @@ body::before {
   .reforma-ces .reforma-action-list li::before { background: var(--cyan); }
   .reforma-ces .reforma-action-cta { background: var(--cyan); color: var(--navy); }
   .reforma-ces .reforma-action-cta:hover { background: var(--white); color: var(--navy); }
+
+  /* ─ VICTORIA CES: ventanilla sobre la denuncia original ─ */
+  .reforma-shell { position: relative; max-width: var(--content-maxw); margin: 0 auto; width: 100%; }
+  .reforma-shell:not(.open) { display: grid; grid-template-areas: 'stack'; align-items: start; }
+  .reforma-shell:not(.open) > .reforma-win,
+  .reforma-shell:not(.open) > .reforma-legacy { grid-area: stack; }
+  .reforma-legacy {
+    filter: blur(3.5px) saturate(0.7);
+    opacity: 0.6;
+    pointer-events: none;
+    user-select: none;
+    max-height: min(72vh, 760px);
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 40%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 0%, #000 40%, transparent 100%);
+    transition: filter 0.6s ease, opacity 0.6s ease;
+  }
+  .reforma-shell.open .reforma-legacy {
+    filter: none;
+    opacity: 1;
+    pointer-events: auto;
+    user-select: auto;
+    max-height: none;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .reforma-win {
+    position: relative;
+    z-index: 6;
+    margin: clamp(10px, 3vw, 40px) auto;
+    justify-self: center;
+    width: min(760px, 100%);
+    background: var(--ink);
+    color: var(--white);
+    border: 1px solid rgba(0, 212, 255, 0.35);
+    box-shadow: 0 40px 90px rgba(0, 35, 64, 0.45);
+  }
+  .reforma-shell.open .reforma-win { margin: 0 auto clamp(28px, 5vw, 48px); }
+  .reforma-win-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--navy-2);
+    border-bottom: 1px solid rgba(0, 212, 255, 0.28);
+  }
+  .reforma-win-dots { display: flex; gap: 6px; }
+  .reforma-win-dots i { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,0.28); }
+  .reforma-win-dots i:first-child { background: var(--cyan); }
+  .reforma-win-file {
+    font-size: clamp(9px, 1.5vw, 10.5px);
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .reforma-win-body { padding: clamp(24px, 4.5vw, 44px); }
+  .reforma-win-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-size: clamp(10px, 1.7vw, 11.5px);
+    font-weight: 800;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--navy);
+    background: var(--cyan);
+    padding: 7px 13px;
+    margin-bottom: clamp(18px, 3vw, 24px);
+  }
+  .reforma-win-eyebrow svg { width: 14px; height: 14px; }
+  .reforma-win-tit {
+    font-size: clamp(26px, 5.4vw, 46px);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+    margin-bottom: clamp(14px, 2.5vw, 20px);
+    text-wrap: balance;
+  }
+  .reforma-win-tit em { color: var(--cyan); font-style: normal; }
+  .reforma-win-txt {
+    font-size: clamp(13px, 2.1vw, 15px);
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.68);
+    font-weight: 300;
+    max-width: 560px;
+  }
+  .reforma-win-txt strong { color: var(--white); font-weight: 600; }
+  .reforma-win-doc {
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 2vw, 18px);
+    margin: clamp(22px, 4vw, 30px) 0 clamp(16px, 2.5vw, 20px);
+    padding: clamp(14px, 2.5vw, 18px);
+    background: rgba(0, 212, 255, 0.07);
+    border: 1px solid rgba(0, 212, 255, 0.28);
+    border-left: 4px solid var(--cyan);
+    text-decoration: none;
+    color: var(--white);
+    transition: background 0.22s ease, transform 0.22s ease;
+  }
+  .reforma-win-doc:hover { background: rgba(0, 212, 255, 0.14); transform: translateY(-2px); }
+  .reforma-win-doc-ico {
+    flex-shrink: 0;
+    width: clamp(40px, 6vw, 50px);
+    height: clamp(40px, 6vw, 50px);
+    background: var(--cyan);
+    color: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .reforma-win-doc-ico svg { width: 52%; height: 52%; }
+  .reforma-win-doc-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+  .reforma-win-doc-eyebrow {
+    font-size: clamp(9px, 1.5vw, 10.5px);
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 4px;
+  }
+  .reforma-win-doc-tit { font-size: clamp(13px, 2.2vw, 16px); font-weight: 800; line-height: 1.25; }
+  .reforma-win-doc-sub { font-size: clamp(10.5px, 1.7vw, 12px); color: rgba(255,255,255,0.5); margin-top: 3px; }
+  .reforma-win-doc-arrow { flex-shrink: 0; width: 20px; height: 20px; color: var(--cyan); }
+  .reforma-win-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .reforma-win-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+    background: var(--cyan);
+    color: var(--navy);
+    text-decoration: none;
+    padding: 14px clamp(18px, 3vw, 24px);
+    font-size: clamp(11px, 1.8vw, 12.5px);
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    border: 1px solid var(--cyan);
+    transition: transform 0.2s ease, background 0.2s ease, gap 0.2s ease;
+  }
+  .reforma-win-btn:hover { transform: translateY(-2px); gap: 15px; background: var(--white); border-color: var(--white); }
+  .reforma-win-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+  .reforma-win-btn.ghost {
+    background: transparent;
+    color: var(--white);
+    border-color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .reforma-win-btn.ghost:hover { background: rgba(255,255,255,0.08); color: var(--white); border-color: var(--cyan); }
+  .reforma-shell.open .reforma-win-btn.ghost .lbl-cerrado { display: none; }
+  .reforma-win-btn.ghost .lbl-abierto { display: none; }
+  .reforma-shell.open .reforma-win-btn.ghost .lbl-abierto { display: inline; }
+  .reforma-shell.open .reforma-win-btn.ghost svg { transform: rotate(180deg); }
+  .reforma-vigente { margin-top: clamp(24px, 4vw, 40px); }
+  .reforma-vigente .reforma-action { margin-bottom: 0; }
   </style>
 
   <section class="reforma" id="reforma">
+    <div class="reforma-shell" id="reforma-shell">
+
+    <div class="reforma-win reveal">
+      <div class="reforma-win-bar">
+        <span class="reforma-win-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="reforma-win-file">CES-PRO-2026-0620-O · Resolución oficial</span>
+      </div>
+      <div class="reforma-win-body">
+        <div class="reforma-win-eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 9H5.5a2.5 2.5 0 0 1 0-5H7"/><path d="M17 9h1.5a2.5 2.5 0 0 0 0-5H17"/><path d="M7 3h10v6a5 5 0 0 1-10 0V3Z"/><path d="M12 14v4"/><path d="M8.5 21h7l-.7-3h-5.6Z"/></svg>
+          Segunda victoria
+        </div>
+        <h2 class="reforma-win-tit">El CES <em>nos dio la razón</em></h2>
+        <p class="reforma-win-txt">
+          Denunciamos la reforma al estatuto que pretendía entregar <strong>poder de veto sobre las candidaturas a rector</strong>. El Consejo de Educación Superior resolvió a favor de la comunidad universitaria: <strong>la reforma no pasa como la querían aprobar.</strong>
+        </p>
+        <a class="reforma-win-doc" href="https://github.com/UDASinCensura/info/blob/main/CES-PRO-2026-0620-O.pdf" target="_blank" rel="noopener">
+          <span class="reforma-win-doc-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M9 15l2 2 4-4"/></svg>
+          </span>
+          <span class="reforma-win-doc-body">
+            <span class="reforma-win-doc-eyebrow">Documento del CES</span>
+            <span class="reforma-win-doc-tit">Resolución CES-PRO-2026-0620-O</span>
+            <span class="reforma-win-doc-sub">PDF oficial — léelo completo</span>
+          </span>
+          <svg class="reforma-win-doc-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+        </a>
+        <div class="reforma-win-actions">
+          <a class="reforma-win-btn" href="https://github.com/UDASinCensura/info/blob/main/UDAsinCENSURA%20Difundir%202.pdf" target="_blank" rel="noopener">
+            Ver boletín
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+          </a>
+          <button class="reforma-win-btn ghost" type="button" id="reforma-toggle" aria-expanded="false" aria-controls="reforma-legacy">
+            <span class="lbl-cerrado">Ver lo que denunciamos</span>
+            <span class="lbl-abierto">Ocultar la denuncia</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m5 12 7 7 7-7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="reforma-legacy" id="reforma-legacy">
     <div class="reforma-inner">
       <header class="reforma-head reveal">
         <div class="reforma-eyebrow">Nueva amenaza a la democracia universitaria</div>
@@ -2662,36 +2843,6 @@ body::before {
         <div class="reforma-quote-attr">— Principio de autonomía y autogobierno universitario</div>
       </blockquote>
 
-      <!-- ▼ Opacidad institucional ▼ -->
-      <article class="reforma-action reveal">
-        <div class="reforma-action-ico alert" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"/>
-            <line x1="12" y1="8" x2="12" y2="13"/>
-            <line x1="12" y1="16.5" x2="12.01" y2="16.5"/>
-          </svg>
-        </div>
-        <div class="reforma-action-body">
-          <div class="reforma-action-eyebrow">Opacidad institucional</div>
-          <h3 class="reforma-action-tit">Las resoluciones del Consejo Universitario <em>no se pueden leer ni descargar.</em></h3>
-          <p class="reforma-action-txt">
-            La página oficial <a href="https://www.uazuay.edu.ec/launiversidad/reglamentos-resoluciones" target="_blank" rel="noopener">uazuay.edu.ec/launiversidad/reglamentos-resoluciones</a> publica solamente los <strong>títulos y números</strong> de las resoluciones del Consejo Universitario, pero <strong>no permite acceder al texto</strong> de las decisiones que afectan a toda la comunidad.
-          </p>
-          <ul class="reforma-action-list">
-            <li>Aparecen los títulos — <strong>sin posibilidad de descarga.</strong></li>
-            <li>No se publica el contenido íntegro de las resoluciones aprobadas.</li>
-            <li>Viola la <strong>LOTAIP, Art. 7</strong> — Transparencia Activa: las instituciones deben difundir, por iniciativa propia, todas sus decisiones de interés general.</li>
-          </ul>
-          <a class="reforma-action-cta" href="https://www.dpe.gob.ec/" target="_blank" rel="noopener">
-            Solicita acceso ante la Defensoría del Pueblo
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5 12h14"/>
-              <path d="m13 5 7 7-7 7"/>
-            </svg>
-          </a>
-        </div>
-      </article>
-
       <!-- ▼ Exigencia CES ▼ -->
       <article class="reforma-action reforma-ces reveal">
         <div class="reforma-action-ico civic" aria-hidden="true">
@@ -2723,8 +2874,89 @@ body::before {
         </div>
       </article>
     </div>
+    </div>
+    </div>
+    <div class="reforma-inner reforma-vigente">
+      <!-- ▼ Opacidad institucional ▼ -->
+      <article class="reforma-action reveal">
+        <div class="reforma-action-ico alert" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="13"/>
+            <line x1="12" y1="16.5" x2="12.01" y2="16.5"/>
+          </svg>
+        </div>
+        <div class="reforma-action-body">
+          <div class="reforma-action-eyebrow">Opacidad institucional · sigue vigente</div>
+          <h3 class="reforma-action-tit">Las resoluciones del Consejo Universitario <em>no se pueden leer ni descargar.</em></h3>
+          <p class="reforma-action-txt">
+            La página oficial <a href="https://www.uazuay.edu.ec/launiversidad/reglamentos-resoluciones" target="_blank" rel="noopener">uazuay.edu.ec/launiversidad/reglamentos-resoluciones</a> publica solamente los <strong>títulos y números</strong> de las resoluciones del Consejo Universitario, pero <strong>no permite acceder al texto</strong> de las decisiones que afectan a toda la comunidad.
+          </p>
+          <ul class="reforma-action-list">
+            <li>Aparecen los títulos — <strong>sin posibilidad de descarga.</strong></li>
+            <li>No se publica el contenido íntegro de las resoluciones aprobadas.</li>
+            <li>Viola la <strong>LOTAIP, Art. 7</strong> — Transparencia Activa: las instituciones deben difundir, por iniciativa propia, todas sus decisiones de interés general.</li>
+          </ul>
+          <a class="reforma-action-cta" href="https://www.dpe.gob.ec/" target="_blank" rel="noopener">
+            Solicita acceso ante la Defensoría del Pueblo
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"/>
+              <path d="m13 5 7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </article>
+    </div>
   </section>
-  
+  <script>
+  (function () {
+    var shell = document.getElementById('reforma-shell');
+    var btn = document.getElementById('reforma-toggle');
+    if (!shell || !btn) return;
+    btn.addEventListener('click', function () {
+      var open = shell.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  })();
+  </script>
+
+  <!-- ═══ DENUNCIA CES ═══ -->
+  <section class="seccion" id="denuncia-ces">
+    <div class="s-head reveal">
+      <div class="s-num">03 · Alerta al CES</div>
+      <h3 class="s-titulo">Exautoridades y profesores <em>rompen el silencio.</em></h3>
+      <p class="s-sub">Voces de experiencia presentaron una denuncia formal ante el Consejo de Educación Superior alertando sobre actuaciones "groseramente ilegales" diseñadas para forzar un proceso electoral con candidato único.</p>
+    </div>
+    <div class="reforma-cols reveal" data-delay="1">
+      <article class="reforma-col left">
+        <div class="reforma-col-eyebrow">El núcleo de la denuncia</div>
+        <h3 class="reforma-col-tit">"Interferir en el proceso electoral para conseguir el apoyo a un solo candidato"</h3>
+        <p class="reforma-col-txt">
+          Quienes firman no son aspirantes al cargo, sino exautoridades que miran con <strong>indignación</strong> cómo se adoptan decisiones que afectan la integridad y tradición de la Universidad. Advierten que los recientes cambios reglamentarios carecen de escrúpulos y buscan <strong>"esconder procesos y actuaciones"</strong>.
+        </p>
+        <span class="reforma-col-badge" style="background: rgba(200, 49, 42, 0.12); color: var(--red-stamp);">Manipulación Electoral</span>
+      </article>
+      <article class="reforma-col right dark">
+        <div class="reforma-col-eyebrow">Documento oficial</div>
+        <h3 class="reforma-col-tit">Denuncia entregada el 31 de julio de 2026</h3>
+        <p class="reforma-col-txt">
+          El documento advierte que donde se asfixia el pluralismo, la libertad de expresión y la publicidad obligatoria de los actos, <strong>"bien podemos decir, no existe Universidad."</strong>
+        </p>
+        <a class="cta-codigo" href="https://github.com/UDASinCensura/info/blob/main/UDAsinCensura%20Difundir.pdf" target="_blank" rel="noopener">
+          <div class="cta-codigo-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <div class="cta-codigo-txt">
+            <div class="cta-codigo-tit">Ver la Denuncia Completa</div>
+            <div class="cta-codigo-sub">PDF con sello de recibido por el CES</div>
+          </div>
+          <div class="cta-codigo-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </div>
+        </a>
+      </article>
+    </div>
+  </section>
 
   <!-- ═══ 7.6. EL PADRÓN MANIPULADO ═══ -->
   <style>
@@ -2975,47 +3207,37 @@ body::before {
   }
   </style>
 
-  <!-- ═══ DENUNCIA CES ═══ -->
-  <section class="seccion" id="denuncia-ces">
-    <div class="s-head reveal">
-      <div class="s-num">03 · Alerta al CES</div>
-      <h3 class="s-titulo">Exautoridades y profesores <em>rompen el silencio.</em></h3>
-      <p class="s-sub">Voces de experiencia presentaron una denuncia formal ante el Consejo de Educación Superior alertando sobre actuaciones "groseramente ilegales" diseñadas para forzar un proceso electoral con candidato único.</p>
-    </div>
-
-    <div class="reforma-cols reveal" data-delay="1">
-      <article class="reforma-col left">
-        <div class="reforma-col-eyebrow">El núcleo de la denuncia</div>
-        <h3 class="reforma-col-tit">"Interferir en el proceso electoral para conseguir el apoyo a un solo candidato"</h3>
-        <p class="reforma-col-txt">
-          Quienes firman no son aspirantes al cargo, sino exautoridades que miran con <strong>indignación</strong> cómo se adoptan decisiones que afectan la integridad y tradición de la Universidad. Advierten que los recientes cambios reglamentarios carecen de escrúpulos y buscan <strong>"esconder procesos y actuaciones"</strong>.
-        </p>
-        <span class="reforma-col-badge" style="background: rgba(200, 49, 42, 0.12); color: var(--red-stamp);">Manipulación Electoral</span>
-      </article>
-
-      <article class="reforma-col right dark">
-        <div class="reforma-col-eyebrow">Documento oficial</div>
-        <h3 class="reforma-col-tit">Denuncia entregada el 31 de julio de 2026</h3>
-        <p class="reforma-col-txt">
-          El documento advierte que donde se asfixia el pluralismo, la libertad de expresión y la publicidad obligatoria de los actos, <strong>"bien podemos decir, no existe Universidad."</strong>
-        </p>
-        <a class="cta-codigo" href="https://github.com/UDASinCensura/info/blob/main/UDAsinCensura%20Difundir.pdf" target="_blank" rel="noopener">
-          <div class="cta-codigo-ico">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-          </div>
-          <div class="cta-codigo-txt">
-            <div class="cta-codigo-tit">Ver la Denuncia Completa</div>
-            <div class="cta-codigo-sub">PDF con sello de recibido por el CES</div>
-          </div>
-          <div class="cta-codigo-arrow">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </div>
-        </a>
-      </article>
-    </div>
-  </section>
-
   <section class="seccion padron" id="padron">
+    <div class="reforma-shell" id="padron-shell">
+
+    <div class="reforma-win reveal" id="primera-victoria">
+      <div class="reforma-win-bar">
+        <span class="reforma-win-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="reforma-win-file">Padrón electoral · registros SGU</span>
+      </div>
+      <div class="reforma-win-body">
+        <div class="reforma-win-eyebrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 9H5.5a2.5 2.5 0 0 1 0-5H7"/><path d="M17 9h1.5a2.5 2.5 0 0 0 0-5H17"/><path d="M7 3h10v6a5 5 0 0 1-10 0V3Z"/><path d="M12 14v4"/><path d="M8.5 21h7l-.7-3h-5.6Z"/></svg>
+          Primera victoria
+        </div>
+        <h2 class="reforma-win-tit"><em>17 de 20</em> registros irregulares desaparecieron</h2>
+        <p class="reforma-win-txt">
+          Denunciamos la titularización de 20 profesores justo antes de las elecciones. No creemos en las coincidencias: <strong>la denuncia funcionó.</strong> Seguimos exigiendo transparencia total en el padrón electoral.
+        </p>
+        <p class="reforma-win-txt" style="margin-top: 14px;">
+          Contamos con evidencia parcial de los cambios. Si tienes acceso al SGU y detectas irregularidades, escríbenos de forma anónima a <a href="mailto:udasincensura@proton.me" style="color: var(--cyan);">udasincensura@proton.me</a>
+        </p>
+        <div class="reforma-win-actions" style="margin-top: clamp(20px, 3.5vw, 28px);">
+          <button class="reforma-win-btn ghost" type="button" id="padron-toggle" aria-expanded="false" aria-controls="padron-legacy">
+            <span class="lbl-cerrado">Ver lo que denunciamos</span>
+            <span class="lbl-abierto">Ocultar la denuncia</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m5 12 7 7 7-7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="reforma-legacy" id="padron-legacy">
     <div class="s-head reveal">
       <div class="section-tag">El padrón electoral</div>
       <h3 class="s-titulo">¿Por qué titularizar <em>20 profesores</em> justo antes de las elecciones?</h3>
@@ -3037,7 +3259,7 @@ body::before {
         <div class="padron-bar">
           <div class="padron-bar-head">
             <span class="padron-bar-name">Profesores titulares</span>
-            <span class="padron-bar-count">282 personas</span>
+            <span class="padron-bar-count">243 personas</span>
           </div>
           <div class="padron-bar-track">
             <div class="padron-bar-fill navy" style="--w: 78%;">
@@ -3049,7 +3271,7 @@ body::before {
         <div class="padron-bar">
           <div class="padron-bar-head">
             <span class="padron-bar-name">Estudiantes</span>
-            <span class="padron-bar-count">7.500 personas</span>
+            <span class="padron-bar-count">4.500 personas</span>
           </div>
           <div class="padron-bar-track">
             <div class="padron-bar-fill cyan" style="--w: 19%;">
@@ -3075,7 +3297,7 @@ body::before {
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M3 6h18"/><path d="M7 12h10"/><path d="M10 18h4"/>
         </svg>
-        <span><strong>7.500 estudiantes</strong> pesan menos que <strong>282 profesores</strong> en las urnas.</span>
+        <span><strong>4.500 estudiantes</strong> pesan menos que <strong>243 profesores</strong> en las urnas.</span>
       </div>
     </div>
 
@@ -3109,26 +3331,21 @@ body::before {
       </article>
     </div>
 
-    <!-- ▼ Bloque logro ▼ -->
-    <div class="padron-logro reveal" data-delay="3" id="primera-victoria">
-      <div class="padron-logro-eyebrow">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M20 6 9 17l-5-5"/>
-        </svg>
-        Primera victoria
-      </div>
-      <h3 class="padron-logro-tit"><em>17 de 20</em> registros irregulares desaparecieron</h3>
-      <p class="padron-logro-txt">
-        No creemos en las coincidencias. <strong>La denuncia funcionó.</strong> Seguimos exigiendo
-        transparencia total en el padrón electoral.
-      </p>
-      <p class="padron-logro-mini">
-        Contamos con evidencia parcial de los cambios. Si tienes acceso al SGU y detectas
-        irregularidades, escríbenos de forma anónima a
-        <a href="/cdn-cgi/l/email-protection#cbbeafaab8a2a5a8aea5b8beb9aa8bbbb9a4bfa4a5e5a6ae"><span class="__cf_email__" data-cfemail="0f7a6b6e7c66616c6a617c7a7d6e4f7f7d607b606121626a">[email&#160;protected]</span></a>
-      </p>
+    </div>
     </div>
   </section>
+
+  <script>
+  (function () {
+    var shell = document.getElementById('padron-shell');
+    var btn = document.getElementById('padron-toggle');
+    if (!shell || !btn) return;
+    btn.addEventListener('click', function () {
+      var open = shell.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  })();
+  </script>
 
   <!-- ═══ 8. CARICATURA TAKEOVER ═══ -->
   <section class="caricatura-takeover" id="caricatura">
@@ -3221,6 +3438,25 @@ body::before {
           <div class="entrevista-meta">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             YouTube · 38:11
+          </div>
+        </div>
+        </a>
+      </article>
+
+      <article class="entrevista">
+        <a class="entrevista-link" href="https://www.youtube.com/watch?v=MPaebavrCZs" target="_blank" rel="noopener" aria-label="Ver entrevista a Antonio Malo Larrea, PhD, en YouTube">
+        <div class="entrevista-thumb">
+          <img class="entrevista-thumb-img" src="https://i.ytimg.com/vi/MPaebavrCZs/hqdefault.jpg" alt="" loading="lazy">
+          <div class="entrevista-play">
+            <svg viewBox="0 0 68 48"><path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55C3.97 2.33 2.27 4.81 1.48 7.74 0 13.05 0 24 0 24s0 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C68 34.95 68 24 68 24s0-10.95-1.48-16.26z" fill="#FF0000"/><path d="M45 24L27 14v20" fill="#fff"/></svg>
+          </div>
+        </div>
+        <div class="entrevista-body">
+          <span class="entrevista-eyebrow">Episodio 03 · Ex profesor UDA</span>
+          <h4 class="entrevista-tit">Antonio Malo Larrea, PhD — Denuncia un entorno de acoso laboral y persecución política.</h4>
+          <div class="entrevista-meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            YouTube · Entrevista
           </div>
         </div>
         </a>
@@ -3347,7 +3583,7 @@ body::before {
 
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 /**
  * <image-slot> — user-fillable image placeholder.
  *
@@ -4133,4 +4369,4 @@ body::before {
 </script>
 
 </body>
-</html> 
+</html>
